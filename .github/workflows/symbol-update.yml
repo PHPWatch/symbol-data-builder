@@ -57,3 +57,19 @@ jobs:
 
       - name: List dirs
         run: find scratch | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+
+  commit:
+    needs: collect
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Prime files
+        run: |
+          rm data
+          cp scratch data -Rf
+
+      - name: Commit data
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update database"
+          branch: main
