@@ -8,7 +8,7 @@ on:
 jobs:
   run:
     runs-on: ${{ matrix.operating-system }}
-    name: Dump data for PHP ${{ matrix.operating-system }}
+    name: PHP ${{ matrix.php-versions }} - Collect
     strategy:
       matrix:
         operating-system: ['ubuntu-latest']
