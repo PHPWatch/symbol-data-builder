@@ -8,6 +8,7 @@ on:
 jobs:
   run:
     runs-on: ${{ matrix.operating-system }}
+    name: Dump data for PHP ${{ matrix.operating-system }}
     strategy:
       matrix:
         operating-system: ['ubuntu-latest']
@@ -46,6 +47,7 @@ jobs:
   collect:
     needs: run
     runs-on: ubuntu-latest
+    name: Collect and Commit Data
 
     steps:
       - uses: actions/checkout@v3
