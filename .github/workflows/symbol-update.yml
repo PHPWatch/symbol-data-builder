@@ -48,6 +48,8 @@ jobs:
     needs: run
     runs-on: ubuntu-latest
     name: Collect and Commit Data
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v3
