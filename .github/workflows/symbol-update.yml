@@ -58,11 +58,6 @@ jobs:
       - name: List dirs
         run: find scratch | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
 
-  commit:
-    needs: collect
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Prime files
         run: |
           rm data -Rf
