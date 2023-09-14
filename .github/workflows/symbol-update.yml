@@ -21,7 +21,39 @@ jobs:
           - '8.3'
           - '8.4'
     steps:
+      - uses: actions/checkout@v3
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
+
+      - name: Display versions and env
+        run: |
+          php -v
+          php -m
+
+      - name: Dump data
+        run: |
+          php bin/dump.php
+
+      - name: Upload data
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.php-versions }}
+          path: scratch
+
+  collect:
+    needs: run
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Collect data
+        uses: actions/download-artifact@v3
+        with:
+          working-directory: scratch
+
+      - name: List dirs
+        run: ls scratch
