@@ -2,9 +2,9 @@
 
 namespace PHPWatch\SymbolData;
 
-class ClassesListSource implements DataSourceInterface {
+class ClassesListSource extends DataSourceBase {
     const NAME = 'class';
-    private function gatherData() {
+    protected function gatherData() {
         $classes = get_declared_classes();
         $return = [];
 
@@ -21,9 +21,5 @@ class ClassesListSource implements DataSourceInterface {
         }
 
         return $return;
-    }
-
-    public static function getAllData() {
-        return (new self())->gatherData();
     }
 }

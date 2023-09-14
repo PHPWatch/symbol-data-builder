@@ -2,12 +2,9 @@
 
 namespace PHPWatch\SymbolData;
 
-class ExtensionListSource implements DataSourceInterface {
+class ExtensionListSource extends DataSourceBase {
     const NAME = 'ext';
-    private function gatherData() {
+    protected function gatherData() {
         return get_loaded_extensions();
-    }
-    public static function getAllData() {
-        return (new self())->gatherData();
     }
 }

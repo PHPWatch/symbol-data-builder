@@ -2,12 +2,9 @@
 
 namespace PHPWatch\SymbolData;
 
-class InterfacesListSource implements DataSourceInterface {
+class InterfacesListSource extends DataSourceBase {
     const NAME = 'interface';
-    private function gatherData() {
+    protected function gatherData() {
         return get_declared_interfaces();
-    }
-    public static function getAllData() {
-        return (new self())->gatherData();
     }
 }

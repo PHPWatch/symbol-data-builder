@@ -12,5 +12,6 @@ $output->addData(ClassesListSource::NAME, ClassesListSource::getAllData());
 $output->addData(TraitsListSource::NAME, TraitsListSource::getAllData());
 $output->addData(InterfacesListSource::NAME, InterfacesListSource::getAllData());
 $output->addData(FunctionsListSource::NAME, FunctionsListSource::getAllData());
+$output->addData(INIListSource::NAME, INIListSource::getAllData());
 
 $output->write();

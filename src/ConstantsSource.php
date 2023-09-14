@@ -2,12 +2,9 @@
 
 namespace PHPWatch\SymbolData;
 
-class ConstantsSource implements DataSourceInterface {
+class ConstantsSource extends DataSourceBase {
     const NAME = 'const';
-    private function gatherData() {
+    protected function gatherData() {
         return get_defined_constants(true);
-    }
-    public static function getAllData() {
-        return (new self())->gatherData();
     }
 }
