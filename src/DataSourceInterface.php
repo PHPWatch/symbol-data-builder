@@ -2,5 +2,5 @@
 
 namespace PHPWatch\SymbolData;
 interface DataSourceInterface {
-    public static function getAllData(): \stdClass;
+    public static function getAllData();
 }

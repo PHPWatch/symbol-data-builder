@@ -53,7 +53,7 @@ jobs:
       - name: Collect data
         uses: actions/download-artifact@v3
         with:
-          working-directory: scratch
+          path: scratch
 
       - name: List dirs
-        run: ls scratch
+        run: find scratch | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"

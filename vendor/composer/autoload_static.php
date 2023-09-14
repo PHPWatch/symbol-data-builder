@@ -9,12 +9,12 @@ class ComposerStaticInit7401965b2c9c06cddabec96e9788b9af
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
-            'Phpwatch\\SymbolData\\' => 20,
+            'PHPWatch\\SymbolData\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Phpwatch\\SymbolData\\' => 
+        'PHPWatch\\SymbolData\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
