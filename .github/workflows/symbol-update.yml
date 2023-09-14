@@ -3,7 +3,7 @@ permissions: read-all
 on:
   workflow_dispatch:
   schedule:
-    - cron: "16 3 3 3 3"
+    - cron: "20 4 * * *"
 
 jobs:
   run:
