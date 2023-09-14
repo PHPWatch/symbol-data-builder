@@ -16,5 +16,8 @@
             "name": "Ayesh Karunaratne",
             "email": "ayesh@aye.sh"
         }
-    ]
+    ],
+    "config": {
+        "platform-check": false
+    }
 }
