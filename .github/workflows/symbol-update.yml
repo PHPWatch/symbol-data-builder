@@ -65,7 +65,7 @@ jobs:
     steps:
       - name: Prime files
         run: |
-          rm data
+          rm data -Rf
           cp scratch data -Rf
 
       - name: Commit data
