@@ -19,7 +19,7 @@ class Output {
 
         foreach ($this->data as $key => $data) {
             $data = var_export($data, true);
-            file_put_contents($this->dir . '/' . $key . '.json', $data);
+            file_put_contents($this->dir . '/' . $key . '.php', $data);
         }
     }
 }
