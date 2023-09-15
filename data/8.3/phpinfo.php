@@ -11,7 +11,7 @@ Configuration
 amqp
 
 Version => 2.1.0
-Compiled => Sep 15 2023 @ 01:35:59
+Compiled => __DYNAMIC__
 AMQP protocol version => 0-9-1
 librabbitmq version => 0.10.0
 Default max channels per connection => 256
