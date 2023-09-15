@@ -13,5 +13,6 @@ $output->addData(TraitsListSource::NAME, TraitsListSource::getAllData());
 $output->addData(InterfacesListSource::NAME, InterfacesListSource::getAllData());
 $output->addData(FunctionsListSource::NAME, FunctionsListSource::getAllData());
 $output->addData(INIListSource::NAME, INIListSource::getAllData());
+$output->addData(PHPInfoSource::NAME, PHPInfoSource::getAllData());
 
 $output->write();
