@@ -296,12 +296,4 @@ return array (
   292 => 'Ds\\Set',
   293 => 'Ds\\PriorityQueue',
   294 => 'Ds\\Pair',
-  295 => 'ComposerAutoloaderInit7401965b2c9c06cddabec96e9788b9af',
-  296 => 'Composer\\Autoload\\ClassLoader',
-  297 => 'Composer\\Autoload\\ComposerStaticInit7401965b2c9c06cddabec96e9788b9af',
-  298 => 'PHPWatch\\SymbolData\\Output',
-  299 => 'PHPWatch\\SymbolData\\DataSourceBase',
-  300 => 'PHPWatch\\SymbolData\\ExtensionListSource',
-  301 => 'PHPWatch\\SymbolData\\ConstantsSource',
-  302 => 'PHPWatch\\SymbolData\\ClassesListSource',
 )

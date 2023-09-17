@@ -53,7 +53,7 @@ APCu Debugging => Disabled
 MMAP Support => Enabled
 MMAP File Mask =>  
 Serialization Support => Disabled
-Build Date => Sep 17 2023 01:32:08
+Build Date => __DYNAMIC__
 
 Directive => Local Value => Master Value
 apc.coredump_unmap => Off => Off
