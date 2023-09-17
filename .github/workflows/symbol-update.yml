@@ -22,7 +22,7 @@ jobs:
           - '8.3'
           - '8.4'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -52,11 +52,14 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        name: Checkout main repo
 
-      - name: Checkout Data Repo
-        run: |
-          git clone https://github.com/Ayesh/PHP-Symbols.git data
+      - uses: actions/checkout@v4
+        name: Checkout data repo
+        with:
+          repository: PHPWatch/PHP-Symbols
+          path: data
 
       - name: Collect data
         uses: actions/download-artifact@v3
