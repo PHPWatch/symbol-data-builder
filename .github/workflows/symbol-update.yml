@@ -60,6 +60,7 @@ jobs:
         with:
           repository: PHPWatch/PHP-Symbols
           path: data
+          token: ${{ secrets.DATA_REPO_PAT }}
 
       - name: Collect data
         uses: actions/download-artifact@v3
