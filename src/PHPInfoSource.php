@@ -6,7 +6,7 @@ class PHPInfoSource extends DataSourceBase {
     const NAME = 'phpinfo';
 
     private function postProcess(string $output): string {
-        $re = '/^(Compiled|Build date)( => )(?<dynamic>.*?)$/m';
+        $re = '/^(Compiled|Build date)( => )(?<dynamic>.*?)$/mi';
         $subst = "$1$2__DYNAMIC__";
         return preg_replace($re, $subst, $output);
     }
