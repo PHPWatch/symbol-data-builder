@@ -53,7 +53,7 @@ APCu Debugging => Disabled
 MMAP Support => Enabled
 MMAP File Mask =>  
 Serialization Support => Disabled
-Build Date => Sep 15 2023 01:36:08
+Build Date => Sep 17 2023 01:32:23
 
 Directive => Local Value => Master Value
 apc.coredump_unmap => Off => Off
@@ -335,6 +335,28 @@ ftp
 
 FTP support => enabled
 FTPS support => enabled
+
+gd
+
+GD Support => enabled
+GD headers Version => 2.3.3
+GD library Version => 2.3.3
+FreeType Support => enabled
+FreeType Linkage => with freetype
+GIF Read Support => enabled
+GIF Create Support => enabled
+JPEG Support => enabled
+PNG Support => enabled
+WBMP Support => enabled
+XPM Support => enabled
+XBM Support => enabled
+WebP Support => enabled
+BMP Support => enabled
+AVIF Support => enabled
+TGA Read Support => enabled
+
+Directive => Local Value => Master Value
+gd.jpeg_ignore_warning => On => On
 
 gettext
 

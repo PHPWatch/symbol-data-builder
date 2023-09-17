@@ -571,6 +571,12 @@ return array (
     'local_value' => NULL,
     'access' => 7,
   ),
+  'gd.jpeg_ignore_warning' => 
+  array (
+    'global_value' => '1',
+    'local_value' => '1',
+    'access' => 7,
+  ),
   'hard_timeout' => 
   array (
     'global_value' => '2',
