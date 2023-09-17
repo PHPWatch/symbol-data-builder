@@ -63,13 +63,12 @@ jobs:
         with:
           path: scratch
 
-      - name: List dirs
-        run: find scratch | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
-
       - name: Prime files
         run: |
-          rm data -Rf
-          cp scratch data -Rf
+          cp scratch/* data/ -Rf
+
+      - name: List dirs
+        run: find data | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
 
       - name: Commit data
         uses: stefanzweifel/git-auto-commit-action@v4
