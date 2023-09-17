@@ -9,11 +9,15 @@ class ClassesListSource extends DataSourceBase {
         $return = [];
 
         foreach ($classes as $class) {
-            if (strpos($class, 'Composer/') === 0) {
+            if (strpos($class, 'Composer\\') === 0) {
                 continue;
             }
 
-            if (strpos($class, 'PHPWatch/') === 0) {
+            if (strpos($class, 'ComposerAutoloaderInit') === 0) {
+                continue;
+            }
+
+            if (strpos($class, 'PHPWatch\\') === 0) {
                 continue;
             }
 
