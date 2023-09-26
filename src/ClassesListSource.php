@@ -10,14 +10,33 @@ class ClassesListSource extends DataSourceBase {
     public static function handleClassList(array $classList, Output $output)
     {
         foreach ($classList as $name) {
+            $reflection = new ReflectionClass($name);
+
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
+            $metafile = realpath(__DIR__ . '/../meta/classes/' . $filename . '.php');
 
-            $reflection = new ReflectionClass($name);
+            // maybe embed custom meta data
+            if ($metafile !== false && file_exists($metafile)) {
+                $meta = include($metafile);
+            } else {
+                // embed generic meta data
+                $meta = [
+                    'type' => 'class',
+                    'name' => $reflection->getName(),
+                    'description' => '',
+                    'keywords' => [],
+                    'added' => '0.0',
+                    'deprecated' => null,
+                    'removed' => null,
+                    'resources' => [],
+                ];
+            }
 
             $output->addData('classes/' . $filename, [
                 'type' => 'class',
                 'name' => $reflection->getName(),
+                'meta' => $meta,
                 'interfaces' => [], // #todo
                 'constants' => [], // #todo
                 'properties' => [], // #todo
