@@ -34,5 +34,6 @@ $output->addData(AttributesListSource::NAME, AttributesListSource::getAllData())
 $output->addData(PHPInfoSource::NAME, PHPInfoSource::getAllData());
 
 ClassesListSource::handleClassList($PHPWatchSymbols['class'], $output);
+InterfacesListSource::handleInterfaceList($PHPWatchSymbols['interface'], $output);
 
 $output->write();
