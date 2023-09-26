@@ -18,9 +18,15 @@ class Output {
         }
 
         foreach ($this->data as $key => $data) {
+            $filename = $this->dir . '/' . $key . '.php';
+
+            if (!is_dir(dirname($filename))) {
+                mkdir(dirname($filename), 0777, true);
+            }
+
             $data = var_export($data, true);
             $data = "<?php \n\nreturn " . $data . ";\n";
-            file_put_contents($this->dir . '/' . $key . '.php', $data);
+            file_put_contents($filename, $data);
         }
     }
 }
