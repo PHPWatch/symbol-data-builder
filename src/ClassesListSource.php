@@ -29,7 +29,7 @@ class ClassesListSource extends DataSourceBase {
                     'added' => '0.0',
                     'deprecated' => null,
                     'removed' => null,
-                    'resources' => [],
+                    'resources' => static::generateResources($name),
                 ];
             }
 
@@ -43,6 +43,23 @@ class ClassesListSource extends DataSourceBase {
                 'methods' => [], // #todo
             ]);
         }
+    }
+
+    private static function generateResources(string $classname): array
+    {
+        // ignore classes without manual entry
+        if (in_array($classname, [
+            '__PHP_Incomplete_Class',
+        ])) {
+            return [];
+        }
+
+        return [
+            [
+                'name' => $classname . ' class (php.net)',
+                'url' => 'https://www.php.net/manual/class.' . str_replace('\\', '-', strtolower($classname)) . '.php',
+            ],
+        ];
     }
 
     protected function gatherData() {
