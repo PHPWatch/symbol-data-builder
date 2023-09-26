@@ -40,6 +40,7 @@ class ClassesListSource extends DataSourceBase {
                 'interfaces' => [], // #todo
                 'constants' => [], // #todo
                 'properties' => [], // #todo
+                'traits' => [], // #todo
                 'methods' => [], // #todo
             ]);
         }
