@@ -38,5 +38,6 @@ ConstantsSource::handleGroupedConstantList($PHPWatchSymbols['const'], $output);
 ClassesListSource::handleClassList($PHPWatchSymbols['class'], $output);
 TraitsListSource::handleTraitList($PHPWatchSymbols['trait'], $output);
 InterfacesListSource::handleInterfaceList($PHPWatchSymbols['interface'], $output);
+FunctionsListSource::handleFunctionList($PHPWatchSymbols['function'], $output);
 
 $output->write();
