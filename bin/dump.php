@@ -33,4 +33,6 @@ $output->addData(INIListSource::NAME, $PHPWatchSymbols['ini']);
 $output->addData(AttributesListSource::NAME, AttributesListSource::getAllData());
 $output->addData(PHPInfoSource::NAME, PHPInfoSource::getAllData());
 
+ClassesListSource::handleClassList($PHPWatchSymbols['class'], $output);
+
 $output->write();
