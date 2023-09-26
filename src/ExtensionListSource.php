@@ -51,6 +51,7 @@ class ExtensionListSource extends DataSourceBase {
         // ignore extenstions without manual entry
         if (in_array($extName, [
             'Core',
+            'standard',
         ])) {
             return [];
         }

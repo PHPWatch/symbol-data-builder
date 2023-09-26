@@ -34,6 +34,7 @@ $output->addData(AttributesListSource::NAME, AttributesListSource::getAllData())
 $output->addData(PHPInfoSource::NAME, PHPInfoSource::getAllData());
 
 ExtensionListSource::handleExtensionList($PHPWatchSymbols['ext'], $output);
+ConstantsSource::handleGroupedConstantList($PHPWatchSymbols['const'], $output);
 ClassesListSource::handleClassList($PHPWatchSymbols['class'], $output);
 InterfacesListSource::handleInterfaceList($PHPWatchSymbols['interface'], $output);
 
