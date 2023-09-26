@@ -33,6 +33,7 @@ $output->addData(INIListSource::NAME, $PHPWatchSymbols['ini']);
 $output->addData(AttributesListSource::NAME, AttributesListSource::getAllData());
 $output->addData(PHPInfoSource::NAME, PHPInfoSource::getAllData());
 
+ExtensionListSource::handleExtensionList($PHPWatchSymbols['ext'], $output);
 ClassesListSource::handleClassList($PHPWatchSymbols['class'], $output);
 InterfacesListSource::handleInterfaceList($PHPWatchSymbols['interface'], $output);
 
