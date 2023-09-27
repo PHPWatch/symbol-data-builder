@@ -9,6 +9,8 @@ class InterfacesListSource extends DataSourceBase {
 
     public static function handleInterfaceList(array $interfaceList, Output $output)
     {
+        $output->addData('interface', $interfaceList);
+
         foreach ($interfaceList as $name) {
             $reflection = new ReflectionClass($name);
 

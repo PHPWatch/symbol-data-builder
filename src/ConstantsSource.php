@@ -7,6 +7,8 @@ class ConstantsSource extends DataSourceBase {
 
     public static function handleGroupedConstantList(array $groupedContstList, Output $output)
     {
+        $output->addData('const', $groupedContstList);
+
         foreach ($groupedContstList as $groupname => $constList) {
             static::handleConstantList($groupname, $constList, $output);
         }

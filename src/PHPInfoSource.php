@@ -5,7 +5,12 @@ namespace PHPWatch\SymbolData;
 class PHPInfoSource extends DataSourceBase {
     const NAME = 'phpinfo';
 
-    private function postProcess(string $output): string {
+    public static function handlePhpinfoString(string $phpinfo, Output $output)
+    {
+        $output->addData('phpinfo', static::postProcess($phpinfo));
+    }
+
+    private static function postProcess(string $output): string {
         $re = '/^(Compiled|Build date)( => )(?<dynamic>.*?)$/mi';
         $subst = "$1$2__DYNAMIC__";
         return preg_replace($re, $subst, $output);
@@ -16,6 +21,6 @@ class PHPInfoSource extends DataSourceBase {
         // Do not include env of build info as they change in every build and run
         phpinfo(INFO_CREDITS|INFO_LICENSE|INFO_MODULES|INFO_CONFIGURATION);
         $return = ob_get_clean();
-        return $this->postProcess($return);
+        return static::postProcess($return);
     }
 }

@@ -9,6 +9,8 @@ class FunctionsListSource extends DataSourceBase {
 
     public static function handleFunctionList(array $functionList, Output $output)
     {
+        $output->addData('function', $functionList);
+
         foreach ($functionList as $name) {
             $reflection = new ReflectionFunction($name);
 

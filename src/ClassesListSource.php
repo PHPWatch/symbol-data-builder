@@ -9,6 +9,8 @@ class ClassesListSource extends DataSourceBase {
 
     public static function handleClassList(array $classList, Output $output)
     {
+        $output->addData('class', $classList);
+
         foreach ($classList as $name) {
             $reflection = new ReflectionClass($name);
 

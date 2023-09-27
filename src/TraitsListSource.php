@@ -9,6 +9,8 @@ class TraitsListSource extends DataSourceBase {
 
     public static function handleTraitList(array $traitList, Output $output)
     {
+        $output->addData('trait', $traitList);
+
         foreach ($traitList as $name) {
             $reflection = new ReflectionClass($name);
 

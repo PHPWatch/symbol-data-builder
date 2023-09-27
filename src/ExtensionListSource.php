@@ -9,6 +9,8 @@ class ExtensionListSource extends DataSourceBase {
 
     public static function handleExtensionList(array $extList, Output $output)
     {
+        $output->addData('ext', $extList);
+
         foreach ($extList as $name) {
             $reflection = new ReflectionExtension($name);
 

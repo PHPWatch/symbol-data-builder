@@ -10,7 +10,24 @@ $PHPWatchSymbols = [
     'interface' => get_declared_interfaces(),
     'function' => get_defined_functions()['internal'],
     'ini' => ini_get_all(),
-    'attribute' => [],
+    // TODO: Find a way to dynamicly get the attributes
+    'attribute' => (function(): array {
+        $data = [];
+
+        if (class_exists('ReturnTypeWillChange')) {
+            $data[] = 'ReturnTypeWillChange';
+        }
+
+        if (class_exists('AllowDynamicProperties')) {
+            $data[] = 'AllowDynamicProperties';
+        }
+
+        if (class_exists('SensitiveParameter')) {
+            $data[] = 'SensitiveParameter';
+        }
+
+        return $data;
+    })(),
     'phpinfo' => (function(): string {
         ob_start();
         // Do not include env of build info as they change in every build and run
@@ -23,21 +40,14 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $output = new Output();
 
-$output->addData(ExtensionListSource::NAME, $PHPWatchSymbols['ext']);
-$output->addData(ConstantsSource::NAME, $PHPWatchSymbols['const']);
-$output->addData(ClassesListSource::NAME, $PHPWatchSymbols['class']);
-$output->addData(TraitsListSource::NAME, $PHPWatchSymbols['trait']);
-$output->addData(InterfacesListSource::NAME, $PHPWatchSymbols['interface']);
-$output->addData(FunctionsListSource::NAME, $PHPWatchSymbols['function']);
-$output->addData(INIListSource::NAME, $PHPWatchSymbols['ini']);
-$output->addData(AttributesListSource::NAME, AttributesListSource::getAllData());
-$output->addData(PHPInfoSource::NAME, PHPInfoSource::getAllData());
-
 ExtensionListSource::handleExtensionList($PHPWatchSymbols['ext'], $output);
 ConstantsSource::handleGroupedConstantList($PHPWatchSymbols['const'], $output);
 ClassesListSource::handleClassList($PHPWatchSymbols['class'], $output);
 TraitsListSource::handleTraitList($PHPWatchSymbols['trait'], $output);
 InterfacesListSource::handleInterfaceList($PHPWatchSymbols['interface'], $output);
 FunctionsListSource::handleFunctionList($PHPWatchSymbols['function'], $output);
+INIListSource::handleIniList($PHPWatchSymbols['ini'], $output);
+AttributesListSource::handleAttributeList($PHPWatchSymbols['attribute'], $output);
+PHPInfoSource::handlePhpinfoString($PHPWatchSymbols['phpinfo'], $output);
 
 $output->write();
