@@ -19,7 +19,7 @@ class Output {
 
         foreach ($this->data as $key => $data) {
             $data = var_export($data, true);
-            $data = "<?php \n\nreturn " . $data . ";\n";
+            $data = "<?php\n\nreturn " . $data . ";\n";
             file_put_contents($this->dir . '/' . $key . '.php', $data);
         }
     }
