@@ -25,7 +25,7 @@ class Output {
             }
 
             $data = var_export($data, true);
-            $data = "<?php \n\nreturn " . $data . ";\n";
+            $data = "<?php\n\nreturn " . $data . ";\n";
             file_put_contents($filename, $data);
         }
     }
