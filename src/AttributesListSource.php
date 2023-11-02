@@ -6,6 +6,58 @@ use ReflectionClass;
 
 class AttributesListSource extends DataSourceBase {
     const NAME = 'attribute';
+
+    public static function handleAttributeList(array $attributeList, Output $output)
+    {
+        $output->addData('attribute', $attributeList);
+
+        foreach ($attributeList as $name) {
+            $reflection = new ReflectionClass($name);
+
+            // Handle namespaces
+            $filename = str_replace('\\', '/', $name);
+            $metafile = realpath(__DIR__ . '/../meta/attributes/' . $filename . '.php');
+
+            // maybe embed custom meta data
+            if ($metafile !== false && file_exists($metafile)) {
+                $meta = include($metafile);
+            } else {
+                // embed generic meta data
+                $meta = [
+                    'type' => 'class',
+                    'name' => $reflection->getName(),
+                    'description' => '',
+                    'keywords' => [],
+                    'added' => '0.0',
+                    'deprecated' => null,
+                    'removed' => null,
+                    'resources' => static::generateResources($name),
+                ];
+            }
+
+            $output->addData('attributes/' . $filename, [
+                'type' => 'class',
+                'name' => $reflection->getName(),
+                'meta' => $meta,
+                'interfaces' => [], // #todo
+                'constants' => [], // #todo
+                'properties' => [], // #todo
+                'traits' => [], // #todo
+                'methods' => [], // #todo
+            ]);
+        }
+    }
+
+    private static function generateResources(string $classname): array
+    {
+        return [
+            [
+                'name' => $classname . ' attribute (php.net)',
+                'url' => 'https://www.php.net/manual/class.' . strtolower($classname) . '.php',
+            ],
+        ];
+    }
+
     protected function gatherData() {
         if (!class_exists('Attribute', false)) {
             return [];
