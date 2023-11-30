@@ -35,13 +35,30 @@ class ClassesListSource extends DataSourceBase {
                 ];
             }
 
+            $properties = [];
+
+            foreach ($reflection->getProperties() as $property) {
+                $properties[$property->getName()] = [
+                    'name' => $property->getName(),
+                    'class' => $property->getDeclaringClass()->getName(),
+                    'type' => ($property->getType() !== null) ? strval($property->getType()) : null,
+                    'has_default_value' => $property->hasDefaultValue(),
+                    'default_value' => $property->getDefaultValue(),
+                    'is_static' => $property->isStatic(),
+                    'is_public' => $property->isPublic(),
+                    'is_protected' => $property->isProtected(),
+                    'is_private' => $property->isPrivate(),
+                    'is_promoted' => $property->isPromoted(),
+                ];
+            }
+
             $output->addData('classes/' . $filename, [
                 'type' => 'class',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
-                'interfaces' => [], // #todo
-                'constants' => [], // #todo
-                'properties' => [], // #todo
+                'interfaces' => $reflection->getInterfaceNames(),
+                'constants' => $reflection->getConstants(),
+                'properties' => $properties,
                 'traits' => [], // #todo
                 'methods' => [], // #todo
             ]);
