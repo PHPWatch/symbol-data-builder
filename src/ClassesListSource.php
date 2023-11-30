@@ -61,6 +61,11 @@ class ClassesListSource extends DataSourceBase {
                 'properties' => $properties,
                 'traits' => [], // #todo
                 'methods' => [], // #todo
+                'is_abstract' => $reflection->isAbstract(),
+                'is_anonymous' => $reflection->isAnonymous(),
+                'is_cloneable' => $reflection->isCloneable(),
+                'is_final' => $reflection->isFinal(),
+                'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
             ]);
         }
     }
