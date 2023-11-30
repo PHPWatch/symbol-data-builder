@@ -24,7 +24,7 @@ class AttributesListSource extends DataSourceBase {
             } else {
                 // embed generic meta data
                 $meta = [
-                    'type' => 'class',
+                    'type' => 'attribute',
                     'name' => $reflection->getName(),
                     'description' => '',
                     'keywords' => [],
@@ -36,14 +36,14 @@ class AttributesListSource extends DataSourceBase {
             }
 
             $output->addData('attributes/' . $filename, [
-                'type' => 'class',
+                'type' => 'attribute',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
-                'interfaces' => [], // #todo
-                'constants' => [], // #todo
-                'properties' => [], // #todo
-                'traits' => [], // #todo
-                'methods' => [], // #todo
+                'interfaces' => $reflection->getInterfaceNames(),
+                'constants' => $reflection->getConstants(),
+                'properties' => static::generateDetailsAboutProperties($reflection),
+                'methods' => static::generateDetailsAboutMethods($reflection),
+                'traits' => $reflection->getTraitNames(),
             ]);
         }
     }

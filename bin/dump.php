@@ -10,20 +10,19 @@ $PHPWatchSymbols = [
     'interface' => get_declared_interfaces(),
     'function' => get_defined_functions()['internal'],
     'ini' => ini_get_all(),
-    // TODO: Find a way to dynamicly get the attributes
     'attribute' => (function(): array {
         $data = [];
 
-        if (class_exists('ReturnTypeWillChange')) {
-            $data[] = 'ReturnTypeWillChange';
+        if (!class_exists(\Attribute::class)) {
+            return $data;
         }
 
-        if (class_exists('AllowDynamicProperties')) {
-            $data[] = 'AllowDynamicProperties';
-        }
+        foreach (get_declared_classes() as $name) {
+            $reflection = new \ReflectionClass($name);
 
-        if (class_exists('SensitiveParameter')) {
-            $data[] = 'SensitiveParameter';
+            if ($reflection->getAttributes(\Attribute::class) !== []) {
+                $data[] = $reflection->getName();
+            }
         }
 
         return $data;
