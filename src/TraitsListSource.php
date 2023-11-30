@@ -39,11 +39,16 @@ class TraitsListSource extends DataSourceBase {
                 'type' => 'trait',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
-                'interfaces' => [], // #todo
-                'constants' => [], // #todo
-                'properties' => [], // #todo
-                'traits' => [], // #todo
-                'methods' => [], // #todo
+                'interfaces' => $reflection->getInterfaceNames(),
+                'constants' => $reflection->getConstants(),
+                'properties' => static::generateDetailsAboutProperties($reflection),
+                'methods' => static::generateDetailsAboutMethods($reflection),
+                'traits' => $reflection->getTraitNames(),
+                'is_abstract' => $reflection->isAbstract(),
+                'is_anonymous' => $reflection->isAnonymous(),
+                'is_cloneable' => $reflection->isCloneable(),
+                'is_final' => $reflection->isFinal(),
+                'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
             ]);
         }
     }
