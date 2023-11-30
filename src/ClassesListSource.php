@@ -52,6 +52,37 @@ class ClassesListSource extends DataSourceBase {
                 ];
             }
 
+            $methods = [];
+
+            foreach ($reflection->getMethods() as $method) {
+                $parameters = [];
+
+                foreach($method->getParameters() as $parameter) {
+                    $parameters[$parameter->getName()] = [
+                        'position'=> $parameter->getPosition(),
+                        'name'=> $parameter->getName(),
+                        'type'=> ($parameter->getType() !== null) ? strval($parameter->getType()) : null,
+                        'is_optional' => $parameter->isOptional(),
+                        'has_default_value' => $parameter->isDefaultValueAvailable(),
+                        'default_value' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
+                        'has_default_value_constant' => $parameter->isDefaultValueAvailable() && $parameter->isDefaultValueConstant(),
+                        'default_value_constant' => $parameter->isDefaultValueAvailable() && $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValueConstantName() : null,
+                    ];
+                }
+
+                $methods[$method->getName()] = [
+                    'name' => $method->getName(),
+                    'class' => $method->getDeclaringClass()->getName(),
+                    'parameters' => $parameters,
+                    'return_type' => ($method->getReturnType() !== null) ? strval($method->getReturnType()) : null,
+                    'has_return_type' => $method->hasReturnType(),
+                    'is_static' => $method->isStatic(),
+                    'is_public' => $method->isPublic(),
+                    'is_protected' => $method->isProtected(),
+                    'is_private' => $method->isPrivate(),
+                ];
+            }
+
             $output->addData('classes/' . $filename, [
                 'type' => 'class',
                 'name' => $reflection->getName(),
@@ -59,8 +90,8 @@ class ClassesListSource extends DataSourceBase {
                 'interfaces' => $reflection->getInterfaceNames(),
                 'constants' => $reflection->getConstants(),
                 'properties' => $properties,
-                'traits' => [], // #todo
-                'methods' => [], // #todo
+                'traits' => $reflection->getTraitNames(),
+                'methods' => $methods,
                 'is_abstract' => $reflection->isAbstract(),
                 'is_anonymous' => $reflection->isAnonymous(),
                 'is_cloneable' => $reflection->isCloneable(),
