@@ -52,8 +52,4 @@ class TraitsListSource extends DataSourceBase {
             ]);
         }
     }
-
-    protected function gatherData() {
-        return get_declared_traits();
-    }
 }

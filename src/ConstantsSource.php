@@ -81,8 +81,4 @@ class ConstantsSource extends DataSourceBase {
             ],
         ];
     }
-
-    protected function gatherData() {
-        return get_defined_constants(true);
-    }
 }
