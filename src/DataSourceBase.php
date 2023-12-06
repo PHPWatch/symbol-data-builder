@@ -63,7 +63,7 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'is_public' => $property->isPublic(),
                 'is_protected' => $property->isProtected(),
                 'is_private' => $property->isPrivate(),
-                'is_promoted' => $property->isPromoted(),
+                'is_promoted' => (method_exists($property, 'isPromoted')) ? $property->isPromoted() : false,
             ];
         }
 
