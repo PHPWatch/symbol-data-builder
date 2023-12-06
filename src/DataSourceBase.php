@@ -5,6 +5,9 @@ namespace PHPWatch\SymbolData;
 use ReflectionClass;
 
 abstract class DataSourceBase implements DataSourceInterface {
+    /**
+     * @deprecated
+     */
     public static function getAllData() {
         return [];
     }
@@ -54,8 +57,8 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'name' => $property->getName(),
                 'class' => $property->getDeclaringClass()->getName(),
                 'type' => ($property->getType() !== null) ? strval($property->getType()) : null,
-                'has_default_value' => $property->hasDefaultValue(),
-                'default_value' => $property->getDefaultValue(),
+                'has_default_value' => (method_exists($property, 'hasDefaultValue')) ? $property->hasDefaultValue() : false,
+                'default_value' => (method_exists($property, 'getDefaultValue')) ? $property->getDefaultValue() : null,
                 'is_static' => $property->isStatic(),
                 'is_public' => $property->isPublic(),
                 'is_protected' => $property->isProtected(),
