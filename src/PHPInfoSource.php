@@ -2,10 +2,25 @@
 
 namespace PHPWatch\SymbolData;
 
-class PHPInfoSource extends DataSourceBase {
+class PHPInfoSource extends DataSourceBase implements DataSource {
     const NAME = 'phpinfo';
 
-    public static function handlePhpinfoString(string $phpinfo, Output $output)
+    /**
+     * @var string
+     */
+    private $data;
+
+    public function __construct(string $data)
+    {
+        $this->data = $data;
+    }
+
+    public function addDataToOutput(Output $output): void
+    {
+        static::handlePhpinfoString($this->data, $output);
+    }
+
+    private static function handlePhpinfoString(string $phpinfo, Output $output)
     {
         $output->addData('phpinfo', static::postProcess($phpinfo));
     }

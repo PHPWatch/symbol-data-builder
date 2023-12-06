@@ -1,1 +1,4 @@
+/.phpunit.cache/
+/composer.lock
 /scratch/
+/vendor/

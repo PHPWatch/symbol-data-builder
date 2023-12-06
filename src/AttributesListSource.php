@@ -4,10 +4,25 @@ namespace PHPWatch\SymbolData;
 
 use ReflectionClass;
 
-class AttributesListSource extends DataSourceBase {
+class AttributesListSource extends DataSourceBase implements DataSource {
     const NAME = 'attribute';
 
-    public static function handleAttributeList(array $attributeList, Output $output)
+    /**
+     * @var array
+     */
+    private $data;
+
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    public function addDataToOutput(Output $output): void
+    {
+        static::handleAttributeList($this->data, $output);
+    }
+
+    private static function handleAttributeList(array $attributeList, Output $output)
     {
         $output->addData('attribute', $attributeList);
 

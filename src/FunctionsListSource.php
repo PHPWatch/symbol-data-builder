@@ -4,10 +4,25 @@ namespace PHPWatch\SymbolData;
 
 use ReflectionFunction;
 
-class FunctionsListSource extends DataSourceBase {
+class FunctionsListSource extends DataSourceBase implements DataSource {
     const NAME = 'function';
 
-    public static function handleFunctionList(array $functionList, Output $output)
+    /**
+     * @var array
+     */
+    private $data;
+
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    public function addDataToOutput(Output $output): void
+    {
+        static::handleFunctionList($this->data, $output);
+    }
+
+    private static function handleFunctionList(array $functionList, Output $output)
     {
         $output->addData('function', $functionList);
 

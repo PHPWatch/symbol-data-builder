@@ -4,10 +4,25 @@ namespace PHPWatch\SymbolData;
 
 use ReflectionExtension;
 
-class ExtensionListSource extends DataSourceBase {
+class ExtensionListSource extends DataSourceBase implements DataSource {
     const NAME = 'ext';
 
-    public static function handleExtensionList(array $extList, Output $output)
+    /**
+     * @var array
+     */
+    private $data;
+
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    public function addDataToOutput(Output $output): void
+    {
+        static::handleExtensionList($this->data, $output);
+    }
+
+    private static function handleExtensionList(array $extList, Output $output)
     {
         $output->addData('ext', $extList);
 

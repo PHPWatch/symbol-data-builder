@@ -33,6 +33,13 @@ jobs:
           php -v
           php -m
 
+      - name: "Install Composer dependencies"
+        uses: "ramsey/composer-install@v2"
+
+      - name: Run phpunit tests
+        run: |
+          composer run phpunit
+
       - name: Dump data
         run: |
           php bin/dump.php
