@@ -4,8 +4,23 @@ namespace PHPWatch\SymbolData;
 
 use ReflectionClass;
 
-class TraitsListSource extends DataSourceBase {
+class TraitsListSource extends DataSourceBase implements DataSource {
     const NAME = 'trait';
+
+    /**
+     * @var array
+     */
+    private $data;
+
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    public function addDataToOutput(Output $output): void
+    {
+        static::handleTraitList($this->data, $output);
+    }
 
     public static function handleTraitList(array $traitList, Output $output)
     {
