@@ -56,7 +56,7 @@ abstract class DataSourceBase implements DataSourceInterface {
             $properties[$property->getName()] = [
                 'name' => $property->getName(),
                 'class' => $property->getDeclaringClass()->getName(),
-                'type' => ($property->getType() !== null) ? strval($property->getType()) : null,
+                'type' => (method_exists($property, 'getType') && $property->getType() !== null) ? strval($property->getType()) : null,
                 'has_default_value' => (method_exists($property, 'hasDefaultValue')) ? $property->hasDefaultValue() : false,
                 'default_value' => (method_exists($property, 'getDefaultValue')) ? $property->getDefaultValue() : null,
                 'is_static' => $property->isStatic(),
