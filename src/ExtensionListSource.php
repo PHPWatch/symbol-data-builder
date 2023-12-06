@@ -22,7 +22,7 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
         static::handleExtensionList($this->data, $output);
     }
 
-    public static function handleExtensionList(array $extList, Output $output)
+    private static function handleExtensionList(array $extList, Output $output)
     {
         $output->addData('ext', $extList);
 

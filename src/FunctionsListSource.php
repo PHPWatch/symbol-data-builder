@@ -22,7 +22,7 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
         static::handleFunctionList($this->data, $output);
     }
 
-    public static function handleFunctionList(array $functionList, Output $output)
+    private static function handleFunctionList(array $functionList, Output $output)
     {
         $output->addData('function', $functionList);
 

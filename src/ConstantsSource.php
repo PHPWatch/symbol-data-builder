@@ -20,7 +20,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         static::handleGroupedConstantList($this->data, $output);
     }
 
-    public static function handleGroupedConstantList(array $groupedContstList, Output $output)
+    private static function handleGroupedConstantList(array $groupedContstList, Output $output)
     {
         $output->addData('const', $groupedContstList);
 

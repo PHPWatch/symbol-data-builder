@@ -37,16 +37,16 @@ $PHPWatchSymbols = [
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$output = new Output();
+$dumper = new Dumper(new Output());
 
-ExtensionListSource::handleExtensionList($PHPWatchSymbols['ext'], $output);
-ConstantsSource::handleGroupedConstantList($PHPWatchSymbols['const'], $output);
-ClassesListSource::handleClassList($PHPWatchSymbols['class'], $output);
-TraitsListSource::handleTraitList($PHPWatchSymbols['trait'], $output);
-InterfacesListSource::handleInterfaceList($PHPWatchSymbols['interface'], $output);
-FunctionsListSource::handleFunctionList($PHPWatchSymbols['function'], $output);
-INIListSource::handleIniList($PHPWatchSymbols['ini'], $output);
-AttributesListSource::handleAttributeList($PHPWatchSymbols['attribute'], $output);
-PHPInfoSource::handlePhpinfoString($PHPWatchSymbols['phpinfo'], $output);
+$dumper->addSource(new ExtensionListSource($PHPWatchSymbols['ext']));
+$dumper->addSource(new ConstantsSource($PHPWatchSymbols['const']));
+$dumper->addSource(new ClassesListSource($PHPWatchSymbols['class']));
+$dumper->addSource(new TraitsListSource($PHPWatchSymbols['trait']));
+$dumper->addSource(new InterfacesListSource($PHPWatchSymbols['interface']));
+$dumper->addSource(new FunctionsListSource($PHPWatchSymbols['function']));
+$dumper->addSource(new INIListSource($PHPWatchSymbols['ini']));
+$dumper->addSource(new AttributesListSource($PHPWatchSymbols['attribute']));
+$dumper->addSource(new PHPInfoSource($PHPWatchSymbols['phpinfo']));
 
-$output->write();
+$dumper->dump();
