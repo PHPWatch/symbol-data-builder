@@ -65,8 +65,4 @@ class ExtensionListSource extends DataSourceBase {
             ],
         ];
     }
-
-    protected function gatherData() {
-        return get_loaded_extensions();
-    }
 }

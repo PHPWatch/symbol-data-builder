@@ -9,8 +9,4 @@ class INIListSource extends DataSourceBase {
     {
         $output->addData('ini', $iniList);
     }
-
-    protected function gatherData() {
-        return ini_get_all();
-    }
 }

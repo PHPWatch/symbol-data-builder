@@ -55,8 +55,4 @@ class FunctionsListSource extends DataSourceBase {
             ],
         ];
     }
-
-    protected function gatherData() {
-        return get_defined_functions()['internal'];
-    }
 }
