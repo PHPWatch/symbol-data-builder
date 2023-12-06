@@ -33,6 +33,10 @@ jobs:
           php -v
           php -m
 
+      - name: Run tests
+        run: |
+          composer run phpunit
+
       - name: Dump data
         run: |
           php bin/dump.php
