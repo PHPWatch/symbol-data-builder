@@ -22,7 +22,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
         static::handleInterfaceList($this->data, $output);
     }
 
-    public static function handleInterfaceList(array $interfaceList, Output $output)
+    private static function handleInterfaceList(array $interfaceList, Output $output)
     {
         $output->addData('interface', $interfaceList);
 

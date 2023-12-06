@@ -22,7 +22,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
         static::handleClassList($this->data, $output);
     }
 
-    public static function handleClassList(array $classList, Output $output)
+    private static function handleClassList(array $classList, Output $output)
     {
         $output->addData('class', $classList);
 

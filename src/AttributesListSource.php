@@ -22,7 +22,7 @@ class AttributesListSource extends DataSourceBase implements DataSource {
         static::handleAttributeList($this->data, $output);
     }
 
-    public static function handleAttributeList(array $attributeList, Output $output)
+    private static function handleAttributeList(array $attributeList, Output $output)
     {
         $output->addData('attribute', $attributeList);
 
