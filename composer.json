@@ -15,6 +15,11 @@
             "PHPWatch\\SymbolData\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\PHPWatch\\SymbolData\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Ayesh Karunaratne",
