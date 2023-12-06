@@ -2,8 +2,23 @@
 
 namespace PHPWatch\SymbolData;
 
-class ConstantsSource extends DataSourceBase {
+class ConstantsSource extends DataSourceBase implements DataSource {
     const NAME = 'const';
+
+    /**
+     * @var array
+     */
+    private $data;
+
+    public function __construct(array $data)
+    {
+        $this->data = $data;
+    }
+
+    public function addDataToOutput(Output $output): void
+    {
+        static::handleGroupedConstantList($this->data, $output);
+    }
 
     public static function handleGroupedConstantList(array $groupedContstList, Output $output)
     {
