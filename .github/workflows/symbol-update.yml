@@ -42,7 +42,7 @@ jobs:
           php bin/dump.php
 
       - name: Upload data
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.php-versions }}
           path: scratch
@@ -66,7 +66,7 @@ jobs:
           token: ${{ secrets.DATA_REPO_PAT }}
 
       - name: Collect data
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: scratch
 
