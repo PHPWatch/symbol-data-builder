@@ -33,6 +33,9 @@ jobs:
         run: |
           php -v
           php -m
+          
+      - name: "Install Composer dependencies"
+        uses: "ramsey/composer-install@v2"
 
       - name: Dump data
         run: |
