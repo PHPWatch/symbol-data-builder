@@ -44,15 +44,16 @@ class Output {
             $data = var_export($data, true);
 
             if (!empty($this->flattedExport[$key])) {
-                $this->removeArrayIndexes($data);
+                $data = $this->postProcessFlatArray($data);
             }
 
             $data = "<?php\n\nreturn " . $data . ";\n";
             file_put_contents($filename, $data);
         }
+
     }
 
-    private function removeArrayIndexes(string $output): string {
-
+    private function postProcessFlatArray(string $export): string {
+        return preg_replace('/^(?<indent>\s\s)(?<rm>(?:\d+)\s=>\s)(?<line>.*),$/m', '$1$3,', $export);
     }
 }

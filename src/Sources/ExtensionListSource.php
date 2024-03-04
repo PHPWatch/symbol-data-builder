@@ -24,7 +24,7 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
     }
 
     private static function handleExtensionList(array $extList, Output $output): void {
-        $output->addData('ext', $extList);
+        $output->addData('ext', $extList, true);
 
         foreach ($extList as $name) {
             $reflection = new ReflectionExtension($name);
