@@ -22,10 +22,13 @@ class Dumper {
     }
 
     public function dump(): void {
+        $this->enumerate();
+        $this->output->write();
+    }
+
+    private function enumerate(): void {
         foreach ($this->sources as $source) {
             $source->addDataToOutput($this->output);
         }
-
-        $this->output->write();
     }
 }
