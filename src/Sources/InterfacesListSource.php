@@ -1,11 +1,14 @@
 <?php
 
-namespace PHPWatch\SymbolData;
+namespace PHPWatch\SymbolData\Sources;
 
+use PHPWatch\SymbolData\DataSource;
+use PHPWatch\SymbolData\DataSourceBase;
+use PHPWatch\SymbolData\Output;
 use ReflectionClass;
 
-class TraitsListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'trait';
+class InterfacesListSource extends DataSourceBase implements DataSource {
+    public const NAME = 'interface';
 
     /**
      * @var array
@@ -17,18 +20,18 @@ class TraitsListSource extends DataSourceBase implements DataSource {
     }
 
     public function addDataToOutput(Output $output): void {
-        static::handleTraitList($this->data, $output);
+        static::handleInterfaceList($this->data, $output);
     }
 
-    private static function handleTraitList(array $traitList, Output $output): void {
-        $output->addData('trait', $traitList);
+    private static function handleInterfaceList(array $interfaceList, Output $output): void {
+        $output->addData('interface', $interfaceList, true);
 
-        foreach ($traitList as $name) {
+        foreach ($interfaceList as $name) {
             $reflection = new ReflectionClass($name);
 
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
-            $metafile = realpath(__DIR__ . '/../meta/traits/' . $filename . '.php');
+            $metafile = realpath(__DIR__ . '/../meta/interfaces/' . $filename . '.php');
 
             // maybe embed custom meta data
             if ($metafile !== false && file_exists($metafile)) {
@@ -36,32 +39,35 @@ class TraitsListSource extends DataSourceBase implements DataSource {
             } else {
                 // embed generic meta data
                 $meta = [
-                    'type' => 'trait',
+                    'type' => 'interface',
                     'name' => $reflection->getName(),
                     'description' => '',
                     'keywords' => [],
                     'added' => '0.0',
                     'deprecated' => null,
                     'removed' => null,
-                    'resources' => [],
+                    'resources' => static::generateResources($name),
                 ];
             }
 
-            $output->addData('traits/' . $filename, [
-                'type' => 'trait',
+            $output->addData('interfaces/' . $filename, [
+                'type' => 'interface',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
                 'interfaces' => $reflection->getInterfaceNames(),
                 'constants' => $reflection->getConstants(),
                 'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
-                'traits' => $reflection->getTraitNames(),
-                'is_abstract' => $reflection->isAbstract(),
-                'is_anonymous' => $reflection->isAnonymous(),
-                'is_cloneable' => $reflection->isCloneable(),
-                'is_final' => $reflection->isFinal(),
-                'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
             ]);
         }
+    }
+
+    private static function generateResources(string $name): array {
+        return [
+            [
+                'name' => $name . ' interface (php.net)',
+                'url' => 'https://www.php.net/manual/class.' . str_replace('\\', '-', strtolower($name)) . '.php',
+            ],
+        ];
     }
 }

@@ -1,6 +1,10 @@
 <?php
 
-namespace PHPWatch\SymbolData;
+namespace PHPWatch\SymbolData\Sources;
+
+use PHPWatch\SymbolData\DataSource;
+use PHPWatch\SymbolData\DataSourceBase;
+use PHPWatch\SymbolData\Output;
 
 class ConstantsSource extends DataSourceBase implements DataSource {
     public const NAME = 'const';

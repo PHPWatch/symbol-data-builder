@@ -9,12 +9,17 @@ class Output {
 
     private $dir;
 
+    private $flattedExport = [];
+
     public function __construct(string $dir = 'scratch') {
         $this->dir = $dir;
     }
 
-    public function addData(string $key, $data): void {
+    public function addData(string $key, $data, bool $flattedExport = false): void {
         $this->data[$key] = $data;
+        if ($flattedExport) {
+            $this->flattedExport[$key] = true;
+        }
     }
 
     public function write(): void {
@@ -37,8 +42,17 @@ class Output {
             }
 
             $data = var_export($data, true);
+
+            if (!empty($this->flattedExport[$key])) {
+                $this->removeArrayIndexes($data);
+            }
+
             $data = "<?php\n\nreturn " . $data . ";\n";
             file_put_contents($filename, $data);
         }
+    }
+
+    private function removeArrayIndexes(string $output): string {
+
     }
 }

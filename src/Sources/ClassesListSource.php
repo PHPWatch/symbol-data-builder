@@ -1,11 +1,14 @@
 <?php
 
-namespace PHPWatch\SymbolData;
+namespace PHPWatch\SymbolData\Sources;
 
+use PHPWatch\SymbolData\DataSource;
+use PHPWatch\SymbolData\DataSourceBase;
+use PHPWatch\SymbolData\Output;
 use ReflectionClass;
 
-class AttributesListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'attribute';
+class ClassesListSource extends DataSourceBase implements DataSource {
+    public const NAME = 'class';
 
     /**
      * @var array
@@ -17,18 +20,18 @@ class AttributesListSource extends DataSourceBase implements DataSource {
     }
 
     public function addDataToOutput(Output $output): void {
-        static::handleAttributeList($this->data, $output);
+        static::handleClassList($this->data, $output);
     }
 
-    private static function handleAttributeList(array $attributeList, Output $output): void {
-        $output->addData('attribute', $attributeList);
+    private static function handleClassList(array $classList, Output $output): void {
+        $output->addData('class', $classList, true);
 
-        foreach ($attributeList as $name) {
+        foreach ($classList as $name) {
             $reflection = new ReflectionClass($name);
 
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
-            $metafile = realpath(__DIR__ . '/../meta/attributes/' . $filename . '.php');
+            $metafile = realpath(__DIR__ . '/../meta/classes/' . $filename . '.php');
 
             // maybe embed custom meta data
             if ($metafile !== false && file_exists($metafile)) {
@@ -36,7 +39,7 @@ class AttributesListSource extends DataSourceBase implements DataSource {
             } else {
                 // embed generic meta data
                 $meta = [
-                    'type' => 'attribute',
+                    'type' => 'class',
                     'name' => $reflection->getName(),
                     'description' => '',
                     'keywords' => [],
@@ -47,8 +50,8 @@ class AttributesListSource extends DataSourceBase implements DataSource {
                 ];
             }
 
-            $output->addData('attributes/' . $filename, [
-                'type' => 'attribute',
+            $output->addData('classes/' . $filename, [
+                'type' => 'class',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
                 'interfaces' => $reflection->getInterfaceNames(),
@@ -56,15 +59,25 @@ class AttributesListSource extends DataSourceBase implements DataSource {
                 'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
                 'traits' => $reflection->getTraitNames(),
+                'is_abstract' => $reflection->isAbstract(),
+                'is_anonymous' => $reflection->isAnonymous(),
+                'is_cloneable' => $reflection->isCloneable(),
+                'is_final' => $reflection->isFinal(),
+                'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
             ]);
         }
     }
 
     private static function generateResources(string $classname): array {
+        // ignore classes without manual entry, currently only __PHP_Incomplete_Class
+        if ($classname === '__PHP_Incomplete_Class') {
+            return [];
+        }
+
         return [
             [
-                'name' => $classname . ' attribute (php.net)',
-                'url' => 'https://www.php.net/manual/class.' . strtolower($classname) . '.php',
+                'name' => $classname . ' class (php.net)',
+                'url' => 'https://www.php.net/manual/class.' . str_replace('\\', '-', strtolower($classname)) . '.php',
             ],
         ];
     }

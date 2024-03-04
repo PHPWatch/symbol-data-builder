@@ -1,7 +1,10 @@
 <?php
 
-namespace PHPWatch\SymbolData;
+namespace PHPWatch\SymbolData\Sources;
 
+use PHPWatch\SymbolData\DataSource;
+use PHPWatch\SymbolData\DataSourceBase;
+use PHPWatch\SymbolData\Output;
 use ReflectionExtension;
 
 class ExtensionListSource extends DataSourceBase implements DataSource {

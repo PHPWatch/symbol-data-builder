@@ -1,6 +1,10 @@
 <?php
 
-namespace PHPWatch\SymbolData;
+namespace PHPWatch\SymbolData\Sources;
+
+use PHPWatch\SymbolData\DataSource;
+use PHPWatch\SymbolData\DataSourceBase;
+use PHPWatch\SymbolData\Output;
 
 class INIListSource extends DataSourceBase implements DataSource {
     public const NAME = 'ini';

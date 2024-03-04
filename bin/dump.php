@@ -2,6 +2,16 @@
 
 namespace PHPWatch\SymbolData;
 
+use PHPWatch\SymbolData\Sources\AttributesListSource;
+use PHPWatch\SymbolData\Sources\ClassesListSource;
+use PHPWatch\SymbolData\Sources\ConstantsSource;
+use PHPWatch\SymbolData\Sources\ExtensionListSource;
+use PHPWatch\SymbolData\Sources\FunctionsListSource;
+use PHPWatch\SymbolData\Sources\INIListSource;
+use PHPWatch\SymbolData\Sources\InterfacesListSource;
+use PHPWatch\SymbolData\Sources\PHPInfoSource;
+use PHPWatch\SymbolData\Sources\TraitsListSource;
+
 $PHPWatchSymbols = [
     'ext' => get_loaded_extensions(),
     'const' => get_defined_constants(true),

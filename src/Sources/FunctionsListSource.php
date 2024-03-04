@@ -1,7 +1,10 @@
 <?php
 
-namespace PHPWatch\SymbolData;
+namespace PHPWatch\SymbolData\Sources;
 
+use PHPWatch\SymbolData\DataSource;
+use PHPWatch\SymbolData\DataSourceBase;
+use PHPWatch\SymbolData\Output;
 use ReflectionFunction;
 
 class FunctionsListSource extends DataSourceBase implements DataSource {
@@ -21,7 +24,7 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
     }
 
     private static function handleFunctionList(array $functionList, Output $output): void {
-        $output->addData('function', $functionList);
+        $output->addData('function', $functionList, true);
 
         foreach ($functionList as $name) {
             $reflection = new ReflectionFunction($name);
