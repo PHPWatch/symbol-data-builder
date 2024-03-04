@@ -52,22 +52,23 @@ abstract class DataSourceBase implements DataSourceInterface {
         return $methods;
     }
 
-    protected static function generateDetailsAboutProperties(ReflectionClass $reflectionClass)
-    {
+    protected static function generateDetailsAboutProperties(ReflectionClass $reflectionClass) {
         $properties = [];
 
         foreach ($reflectionClass->getProperties() as $property) {
             $properties[$property->getName()] = [
                 'name' => $property->getName(),
                 'class' => $property->getDeclaringClass()->getName(),
-                'type' => (method_exists($property, 'getType') && $property->getType() !== null) ? strval($property->getType()) : null,
-                'has_default_value' => (method_exists($property, 'hasDefaultValue')) ? $property->hasDefaultValue() : false,
+                'type' => (method_exists($property, 'getType') && $property->getType() !== null)
+                    ? (string) $property->getType()
+                    : null,
+                'has_default_value' => method_exists($property, 'hasDefaultValue') && $property->hasDefaultValue(),
                 'default_value' => (method_exists($property, 'getDefaultValue')) ? $property->getDefaultValue() : null,
                 'is_static' => $property->isStatic(),
                 'is_public' => $property->isPublic(),
                 'is_protected' => $property->isProtected(),
                 'is_private' => $property->isPrivate(),
-                'is_promoted' => (method_exists($property, 'isPromoted')) ? $property->isPromoted() : false,
+                'is_promoted' => method_exists($property, 'isPromoted') && $property->isPromoted(),
             ];
         }
 
