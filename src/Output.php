@@ -22,11 +22,18 @@ class Output {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
 
+        $dirCache = [];
+
         foreach ($this->data as $key => $data) {
             $filename = $this->dir . '/' . $key . '.php';
+            $dir = dirname($filename);
 
-            if (!is_dir(dirname($filename))) {
-                mkdir(dirname($filename), 0777, true);
+            if (empty($dirCache[$dir])) {
+                if (!is_dir($dir) && !mkdir($dir, 0777, true) && !is_dir($dir)) {
+                    throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+                }
+
+                $dirCache[dirname($filename)] = true;
             }
 
             $data = var_export($data, true);
