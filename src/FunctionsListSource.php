@@ -12,18 +12,15 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handleFunctionList($this->data, $output);
     }
 
-    private static function handleFunctionList(array $functionList, Output $output)
-    {
+    private static function handleFunctionList(array $functionList, Output $output) {
         $output->addData('function', $functionList);
 
         foreach ($functionList as $name) {
@@ -61,8 +58,7 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $name): array
-    {
+    private static function generateResources(string $name): array {
         return [
             [
                 'name' => $name . ' function (php.net)',

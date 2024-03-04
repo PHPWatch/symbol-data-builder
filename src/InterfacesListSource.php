@@ -12,18 +12,15 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handleInterfaceList($this->data, $output);
     }
 
-    private static function handleInterfaceList(array $interfaceList, Output $output)
-    {
+    private static function handleInterfaceList(array $interfaceList, Output $output) {
         $output->addData('interface', $interfaceList);
 
         foreach ($interfaceList as $name) {
@@ -62,8 +59,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $name): array
-    {
+    private static function generateResources(string $name): array {
         return [
             [
                 'name' => $name . ' interface (php.net)',

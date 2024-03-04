@@ -1,13 +1,16 @@
 <?php
 
 namespace PHPWatch\SymbolData;
+
 class Output {
     private $data = [];
 
     private $dir;
+
     public function __construct(string $dir = 'scratch') {
         $this->dir = $dir;
     }
+
     public function addData(string $key, $data): void {
         $this->data[$key] = $data;
     }

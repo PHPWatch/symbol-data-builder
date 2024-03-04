@@ -12,18 +12,15 @@ class AttributesListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handleAttributeList($this->data, $output);
     }
 
-    private static function handleAttributeList(array $attributeList, Output $output)
-    {
+    private static function handleAttributeList(array $attributeList, Output $output): void {
         $output->addData('attribute', $attributeList);
 
         foreach ($attributeList as $name) {
@@ -63,8 +60,7 @@ class AttributesListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $classname): array
-    {
+    private static function generateResources(string $classname): array {
         return [
             [
                 'name' => $classname . ' attribute (php.net)',

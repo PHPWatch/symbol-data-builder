@@ -12,18 +12,15 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handleExtensionList($this->data, $output);
     }
 
-    private static function handleExtensionList(array $extList, Output $output)
-    {
+    private static function handleExtensionList(array $extList, Output $output) {
         $output->addData('ext', $extList);
 
         foreach ($extList as $name) {
@@ -63,8 +60,7 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $extName): array
-    {
+    private static function generateResources(string $extName): array {
         // ignore extenstions without manual entry
         if (in_array($extName, [
             'Core',

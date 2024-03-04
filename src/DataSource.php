@@ -2,7 +2,6 @@
 
 namespace PHPWatch\SymbolData;
 
-interface DataSource
-{
+interface DataSource {
     public function addDataToOutput(Output $output): void;
 }

@@ -10,18 +10,15 @@ class PHPInfoSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(string $data)
-    {
+    public function __construct(string $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handlePhpinfoString($this->data, $output);
     }
 
-    private static function handlePhpinfoString(string $phpinfo, Output $output)
-    {
+    private static function handlePhpinfoString(string $phpinfo, Output $output) {
         $output->addData('phpinfo', static::postProcess($phpinfo));
     }
 

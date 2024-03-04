@@ -19,11 +19,11 @@ abstract class DataSourceBase implements DataSourceInterface {
         foreach ($reflectionClass->getMethods() as $method) {
             $parameters = [];
 
-            foreach($method->getParameters() as $parameter) {
+            foreach ($method->getParameters() as $parameter) {
                 $parameters[$parameter->getName()] = [
-                    'position'=> $parameter->getPosition(),
-                    'name'=> $parameter->getName(),
-                    'type'=> ($parameter->getType() !== null) ? strval($parameter->getType()) : null,
+                    'position' => $parameter->getPosition(),
+                    'name' => $parameter->getName(),
+                    'type' => ($parameter->getType() !== null) ? strval($parameter->getType()) : null,
                     'is_optional' => $parameter->isOptional(),
                     'has_default_value' => $parameter->isDefaultValueAvailable(),
                     'default_value' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,

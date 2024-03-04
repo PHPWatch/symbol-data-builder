@@ -10,18 +10,15 @@ class ConstantsSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handleGroupedConstantList($this->data, $output);
     }
 
-    private static function handleGroupedConstantList(array $groupedContstList, Output $output)
-    {
+    private static function handleGroupedConstantList(array $groupedContstList, Output $output) {
         $output->addData('const', $groupedContstList);
 
         foreach ($groupedContstList as $groupname => $constList) {
@@ -29,8 +26,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function handleConstantList(string $groupname, array $constList, Output $output)
-    {
+    private static function handleConstantList(string $groupname, array $constList, Output $output) {
         foreach ($constList as $name => $value) {
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
@@ -63,15 +59,14 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $groupname, string $name): array
-    {
+    private static function generateResources(string $groupname, string $name): array {
         $urls = [
             'Core' => 'https://www.php.net/manual/reserved.constants.php',
             'curl' => 'https://www.php.net/manual/curl.constants.php',
             'date' => 'https://www.php.net/manual/class.datetimeinterface.php',
         ];
 
-        if (! array_key_exists($groupname, $urls)) {
+        if (!array_key_exists($groupname, $urls)) {
             return [];
         }
 

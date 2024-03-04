@@ -12,18 +12,15 @@ class TraitsListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handleTraitList($this->data, $output);
     }
 
-    private static function handleTraitList(array $traitList, Output $output)
-    {
+    private static function handleTraitList(array $traitList, Output $output) {
         $output->addData('trait', $traitList);
 
         foreach ($traitList as $name) {

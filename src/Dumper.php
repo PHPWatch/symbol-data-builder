@@ -13,13 +13,11 @@ class Dumper {
      */
     private $output;
 
-    public function __construct(Output $output)
-    {
+    public function __construct(Output $output) {
         $this->output = $output;
     }
 
-    public function addSource(DataSource $source): void
-    {
+    public function addSource(DataSource $source): void {
         $this->sources[] = $source;
     }
 

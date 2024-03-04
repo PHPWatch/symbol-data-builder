@@ -10,18 +10,15 @@ class INIListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handleIniList($this->data, $output);
     }
 
-    private static function handleIniList(array $iniList, Output $output)
-    {
+    private static function handleIniList(array $iniList, Output $output) {
         $output->addData('ini', $iniList);
     }
 }

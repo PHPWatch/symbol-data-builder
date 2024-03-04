@@ -12,18 +12,15 @@ class ClassesListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
-    public function __construct(array $data)
-    {
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void
-    {
+    public function addDataToOutput(Output $output): void {
         static::handleClassList($this->data, $output);
     }
 
-    private static function handleClassList(array $classList, Output $output)
-    {
+    private static function handleClassList(array $classList, Output $output): void {
         $output->addData('class', $classList);
 
         foreach ($classList as $name) {
@@ -68,8 +65,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $classname): array
-    {
+    private static function generateResources(string $classname): array {
         // ignore classes without manual entry
         if (in_array($classname, [
             '__PHP_Incomplete_Class',
