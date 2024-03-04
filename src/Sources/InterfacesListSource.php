@@ -31,11 +31,11 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
 
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
-            $metafile = realpath(__DIR__ . '/../meta/interfaces/' . $filename . '.php');
+            $metafile = realpath(__DIR__ . '/../../meta/interfaces/' . $filename . '.php');
 
             // maybe embed custom meta data
             if ($metafile !== false && file_exists($metafile)) {
-                $meta = include($metafile);
+                $meta = require $metafile;
             } else {
                 // embed generic meta data
                 $meta = [
