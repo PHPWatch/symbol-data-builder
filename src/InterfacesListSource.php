@@ -5,7 +5,7 @@ namespace PHPWatch\SymbolData;
 use ReflectionClass;
 
 class InterfacesListSource extends DataSourceBase implements DataSource {
-    const NAME = 'interface';
+    public const NAME = 'interface';
 
     /**
      * @var array

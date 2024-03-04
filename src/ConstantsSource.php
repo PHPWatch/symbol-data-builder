@@ -3,7 +3,7 @@
 namespace PHPWatch\SymbolData;
 
 class ConstantsSource extends DataSourceBase implements DataSource {
-    const NAME = 'const';
+    public const NAME = 'const';
 
     /**
      * @var array

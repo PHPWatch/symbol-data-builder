@@ -3,7 +3,7 @@
 namespace PHPWatch\SymbolData;
 
 class INIListSource extends DataSourceBase implements DataSource {
-    const NAME = 'ini';
+    public const NAME = 'ini';
 
     /**
      * @var array

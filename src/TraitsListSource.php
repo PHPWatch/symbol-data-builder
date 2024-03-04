@@ -5,7 +5,7 @@ namespace PHPWatch\SymbolData;
 use ReflectionClass;
 
 class TraitsListSource extends DataSourceBase implements DataSource {
-    const NAME = 'trait';
+    public const NAME = 'trait';
 
     /**
      * @var array

@@ -5,7 +5,7 @@ namespace PHPWatch\SymbolData;
 use ReflectionFunction;
 
 class FunctionsListSource extends DataSourceBase implements DataSource {
-    const NAME = 'function';
+    public const NAME = 'function';
 
     /**
      * @var array

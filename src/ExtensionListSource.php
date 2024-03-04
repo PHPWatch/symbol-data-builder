@@ -5,7 +5,7 @@ namespace PHPWatch\SymbolData;
 use ReflectionExtension;
 
 class ExtensionListSource extends DataSourceBase implements DataSource {
-    const NAME = 'ext';
+    public const NAME = 'ext';
 
     /**
      * @var array

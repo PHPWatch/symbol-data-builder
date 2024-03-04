@@ -3,7 +3,7 @@
 namespace PHPWatch\SymbolData;
 
 class PHPInfoSource extends DataSourceBase implements DataSource {
-    const NAME = 'phpinfo';
+    public const NAME = 'phpinfo';
 
     /**
      * @var string
