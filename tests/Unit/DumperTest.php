@@ -7,8 +7,7 @@ use PHPWatch\SymbolData\DataSource;
 use PHPWatch\SymbolData\Dumper;
 use PHPWatch\SymbolData\Output;
 
-class DumperTest extends TestCase
-{
+class DumperTest extends TestCase {
     /**
      * Tests that calling Dumper::dump() calls the sources and output.
      *
@@ -16,8 +15,7 @@ class DumperTest extends TestCase
      *
      * @return void
      */
-    public function testDumpCallsOutputWrite()
-    {
+    public function testDumpCallsOutputWrite() {
         $output = $this->createMock(Output::class);
         $output->expects($this->once())->method('write');
 

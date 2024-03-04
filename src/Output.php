@@ -2,6 +2,8 @@
 
 namespace PHPWatch\SymbolData;
 
+use RuntimeException;
+
 class Output {
     private $data = [];
 
@@ -17,7 +19,7 @@ class Output {
 
     public function write(): void {
         if (!is_dir($this->dir) && !mkdir($concurrentDirectory = $this->dir) && !is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
 
         foreach ($this->data as $key => $data) {

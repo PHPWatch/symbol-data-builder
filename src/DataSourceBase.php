@@ -5,8 +5,7 @@ namespace PHPWatch\SymbolData;
 use ReflectionClass;
 
 abstract class DataSourceBase implements DataSourceInterface {
-    protected static function generateDetailsAboutMethods(ReflectionClass $reflectionClass)
-    {
+    protected static function generateDetailsAboutMethods(ReflectionClass $reflectionClass) {
         $methods = [];
 
         foreach ($reflectionClass->getMethods() as $method) {
@@ -16,7 +15,7 @@ abstract class DataSourceBase implements DataSourceInterface {
                 $parameters[$parameter->getName()] = [
                     'position' => $parameter->getPosition(),
                     'name' => $parameter->getName(),
-                    'type' => ($parameter->getType() !== null) ? (string) $parameter->getType() : null,
+                    'type' => ($parameter->getType() !== null) ? (string)$parameter->getType() : null,
                     'is_optional' => $parameter->isOptional(),
                     'has_default_value' => $parameter->isDefaultValueAvailable(),
                     'default_value' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
@@ -53,7 +52,7 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'name' => $property->getName(),
                 'class' => $property->getDeclaringClass()->getName(),
                 'type' => (method_exists($property, 'getType') && $property->getType() !== null)
-                    ? (string) $property->getType()
+                    ? (string)$property->getType()
                     : null,
                 'has_default_value' => method_exists($property, 'hasDefaultValue') && $property->hasDefaultValue(),
                 'default_value' => (method_exists($property, 'getDefaultValue')) ? $property->getDefaultValue() : null,
