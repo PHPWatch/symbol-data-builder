@@ -27,7 +27,7 @@ $PHPWatchSymbols = [
 
         return $data;
     })(),
-    'phpinfo' => (function(): string {
+    'phpinfo' => (static function(): string {
         ob_start();
         // Do not include env of build info as they change in every build and run
         phpinfo(INFO_CREDITS|INFO_LICENSE|INFO_MODULES|INFO_CONFIGURATION);
