@@ -20,7 +20,7 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
         static::handleExtensionList($this->data, $output);
     }
 
-    private static function handleExtensionList(array $extList, Output $output) {
+    private static function handleExtensionList(array $extList, Output $output): void {
         $output->addData('ext', $extList);
 
         foreach ($extList as $name) {
@@ -61,7 +61,7 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
     }
 
     private static function generateResources(string $extName): array {
-        // ignore extenstions without manual entry
+        // ignore extensions without manual entry
         if (in_array($extName, [
             'Core',
             'standard',

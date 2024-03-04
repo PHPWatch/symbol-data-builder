@@ -18,7 +18,7 @@ class PHPInfoSource extends DataSourceBase implements DataSource {
         static::handlePhpinfoString($this->data, $output);
     }
 
-    private static function handlePhpinfoString(string $phpinfo, Output $output) {
+    private static function handlePhpinfoString(string $phpinfo, Output $output): void {
         $output->addData('phpinfo', static::postProcess($phpinfo));
     }
 

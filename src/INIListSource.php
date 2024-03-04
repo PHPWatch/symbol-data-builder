@@ -18,7 +18,7 @@ class INIListSource extends DataSourceBase implements DataSource {
         static::handleIniList($this->data, $output);
     }
 
-    private static function handleIniList(array $iniList, Output $output) {
+    private static function handleIniList(array $iniList, Output $output): void {
         $output->addData('ini', $iniList);
     }
 }

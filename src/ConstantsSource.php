@@ -18,15 +18,15 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         static::handleGroupedConstantList($this->data, $output);
     }
 
-    private static function handleGroupedConstantList(array $groupedContstList, Output $output) {
-        $output->addData('const', $groupedContstList);
+    private static function handleGroupedConstantList(array $groupedConstList, Output $output): void {
+        $output->addData('const', $groupedConstList);
 
-        foreach ($groupedContstList as $groupname => $constList) {
-            static::handleConstantList($groupname, $constList, $output);
+        foreach ($groupedConstList as $groupName => $constList) {
+            static::handleConstantList($groupName, $constList, $output);
         }
     }
 
-    private static function handleConstantList(string $groupname, array $constList, Output $output) {
+    private static function handleConstantList(string $groupName, array $constList, Output $output): void {
         foreach ($constList as $name => $value) {
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
@@ -45,7 +45,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
                     'added' => '0.0',
                     'deprecated' => null,
                     'removed' => null,
-                    'resources' => static::generateResources($groupname, $name),
+                    'resources' => static::generateResources($groupName, $name),
                 ];
             }
 
@@ -54,30 +54,30 @@ class ConstantsSource extends DataSourceBase implements DataSource {
                 'name' => $name,
                 'meta' => $meta,
                 'value' => $value,
-                'extension' => $groupname,
+                'extension' => $groupName,
             ]);
         }
     }
 
-    private static function generateResources(string $groupname, string $name): array {
+    private static function generateResources(string $groupName, string $name): array {
         $urls = [
             'Core' => 'https://www.php.net/manual/reserved.constants.php',
             'curl' => 'https://www.php.net/manual/curl.constants.php',
             'date' => 'https://www.php.net/manual/class.datetimeinterface.php',
         ];
 
-        if (!array_key_exists($groupname, $urls)) {
+        if (!array_key_exists($groupName, $urls)) {
             return [];
         }
 
-        $url = $urls[$groupname];
+        $url = $urls[$groupName];
         $anchorName = 'constant.' . $name;
 
-        if ($groupname === 'date' && substr($name, 0, 5) === 'DATE_') {
+        if ($groupName === 'date' && strpos($name, 'DATE_') === 0) {
             $anchorName = 'datetimeinterface.constants.' . substr($name, 5);
         }
 
-        if ($groupname === 'date' && substr($name, 0, 9) === 'SUNFUNCS_') {
+        if ($groupName === 'date' && strpos($name, 'SUNFUNCS_') === 0) {
             $url = 'https://www.php.net/manual/function.date-sunrise.php';
             $anchorName = 'refsect1-function.date-sunrise-parameters';
         }

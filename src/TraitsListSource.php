@@ -20,7 +20,7 @@ class TraitsListSource extends DataSourceBase implements DataSource {
         static::handleTraitList($this->data, $output);
     }
 
-    private static function handleTraitList(array $traitList, Output $output) {
+    private static function handleTraitList(array $traitList, Output $output): void {
         $output->addData('trait', $traitList);
 
         foreach ($traitList as $name) {

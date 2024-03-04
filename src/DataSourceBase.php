@@ -5,7 +5,7 @@ namespace PHPWatch\SymbolData;
 use ReflectionClass;
 
 abstract class DataSourceBase implements DataSourceInterface {
-    protected static function generateDetailsAboutMethods(ReflectionClass $reflectionClass) {
+    protected static function generateDetailsAboutMethods(ReflectionClass $reflectionClass): array {
         $methods = [];
 
         foreach ($reflectionClass->getMethods() as $method) {
@@ -32,7 +32,7 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'name' => $method->getName(),
                 'class' => $method->getDeclaringClass()->getName(),
                 'parameters' => $parameters,
-                'return_type' => ($method->getReturnType() !== null) ? strval($method->getReturnType()) : null,
+                'return_type' => ($method->getReturnType() !== null) ? (string)$method->getReturnType() : null,
                 'has_return_type' => $method->hasReturnType(),
                 'is_static' => $method->isStatic(),
                 'is_public' => $method->isPublic(),
@@ -44,7 +44,7 @@ abstract class DataSourceBase implements DataSourceInterface {
         return $methods;
     }
 
-    protected static function generateDetailsAboutProperties(ReflectionClass $reflectionClass) {
+    protected static function generateDetailsAboutProperties(ReflectionClass $reflectionClass): array {
         $properties = [];
 
         foreach ($reflectionClass->getProperties() as $property) {
