@@ -23,12 +23,16 @@ abstract class DataSourceBase implements DataSourceInterface {
                 $parameters[$parameter->getName()] = [
                     'position' => $parameter->getPosition(),
                     'name' => $parameter->getName(),
-                    'type' => ($parameter->getType() !== null) ? strval($parameter->getType()) : null,
+                    'type' => ($parameter->getType() !== null) ? (string) $parameter->getType() : null,
                     'is_optional' => $parameter->isOptional(),
                     'has_default_value' => $parameter->isDefaultValueAvailable(),
                     'default_value' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
-                    'has_default_value_constant' => $parameter->isDefaultValueAvailable() && $parameter->isDefaultValueConstant(),
-                    'default_value_constant' => $parameter->isDefaultValueAvailable() && $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValueConstantName() : null,
+                    'has_default_value_constant' => $parameter->isDefaultValueAvailable()
+                        && $parameter->isDefaultValueConstant(),
+                    'default_value_constant' =>
+                        $parameter->isDefaultValueAvailable()
+                            ? $parameter->getDefaultValueConstantName()
+                            : null,
                 ];
             }
 
