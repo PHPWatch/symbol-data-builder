@@ -42,7 +42,8 @@ jobs:
           php -m
           
       - name: "Install Composer dependencies"
-        uses: "ramsey/composer-install@v3"
+        run:
+          composer dump-autoload
 
       - name: Dump data
         run: |
