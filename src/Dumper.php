@@ -17,16 +17,16 @@ class Dumper {
         $this->output = $output;
     }
 
-    public function addSource(DataSource $source): void {
+    public function addSource(DataSource $source) {
         $this->sources[] = $source;
     }
 
-    public function dump(): void {
+    public function dump() {
         $this->enumerate();
         $this->output->write();
     }
 
-    private function enumerate(): void {
+    private function enumerate() {
         foreach ($this->sources as $source) {
             $source->addDataToOutput($this->output);
         }

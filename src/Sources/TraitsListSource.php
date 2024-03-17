@@ -8,7 +8,7 @@ use PHPWatch\SymbolData\Output;
 use ReflectionClass;
 
 class TraitsListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'trait';
+    const NAME = 'trait';
 
     /**
      * @var array
@@ -19,11 +19,11 @@ class TraitsListSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void {
+    public function addDataToOutput(Output $output) {
         static::handleTraitList($this->data, $output);
     }
 
-    private static function handleTraitList(array $traitList, Output $output): void {
+    private static function handleTraitList(array $traitList, Output $output) {
         $output->addData('trait', $traitList, true);
 
         foreach ($traitList as $name) {

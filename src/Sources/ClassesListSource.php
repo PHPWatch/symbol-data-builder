@@ -8,7 +8,7 @@ use PHPWatch\SymbolData\Output;
 use ReflectionClass;
 
 class ClassesListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'class';
+    const NAME = 'class';
 
     /**
      * @var array
@@ -19,11 +19,11 @@ class ClassesListSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void {
+    public function addDataToOutput(Output $output) {
         static::handleClassList($this->data, $output);
     }
 
-    private static function handleClassList(array $classList, Output $output): void {
+    private static function handleClassList(array $classList, Output $output){
         $output->addData('class', $classList, true);
 
         foreach ($classList as $name) {
@@ -68,7 +68,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $classname): array {
+    private static function generateResources(string $classname) {
         // ignore classes without manual entry, currently only __PHP_Incomplete_Class
         if ($classname === '__PHP_Incomplete_Class') {
             return [];

@@ -8,7 +8,7 @@ use PHPWatch\SymbolData\Output;
 use ReflectionExtension;
 
 class ExtensionListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'ext';
+    const NAME = 'ext';
 
     /**
      * @var array
@@ -19,11 +19,11 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void {
+    public function addDataToOutput(Output $output) {
         static::handleExtensionList($this->data, $output);
     }
 
-    private static function handleExtensionList(array $extList, Output $output): void {
+    private static function handleExtensionList(array $extList, Output $output) {
         $output->addData('ext', $extList, true);
 
         foreach ($extList as $name) {
@@ -63,7 +63,7 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $extName): array {
+    private static function generateResources($extName) {
         // ignore extensions without manual entry
         if (in_array($extName, [
             'Core',

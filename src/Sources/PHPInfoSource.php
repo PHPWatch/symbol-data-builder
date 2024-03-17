@@ -7,26 +7,26 @@ use PHPWatch\SymbolData\DataSourceBase;
 use PHPWatch\SymbolData\Output;
 
 class PHPInfoSource extends DataSourceBase implements DataSource {
-    public const NAME = 'phpinfo';
+    const NAME = 'phpinfo';
 
     /**
      * @var string
      */
     private $data;
 
-    public function __construct(string $data) {
+    public function __construct($data) {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void {
+    public function addDataToOutput(Output $output) {
         static::handlePhpinfoString($this->data, $output);
     }
 
-    private static function handlePhpinfoString(string $phpinfo, Output $output): void {
+    private static function handlePhpinfoString($phpinfo, Output $output) {
         $output->addData('phpinfo', static::postProcess($phpinfo));
     }
 
-    private static function postProcess(string $output): string {
+    private static function postProcess($output) {
         $re = '/^(Compiled|Build date)( => )(?<dynamic>.*?)$/mi';
         $subst = "$1$2__DYNAMIC__";
         return preg_replace($re, $subst, $output);

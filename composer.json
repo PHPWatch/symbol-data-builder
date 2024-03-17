@@ -3,7 +3,7 @@
     "description": "PHP Symbol data storage and dumper",
     "type": "project",
     "require": {
-        "php": "^7.2 || ^8.0",
+        "php": "^5.4 || ^7.0 || ^8.0",
         "ext-json": "*"
     },
     "require-dev": {

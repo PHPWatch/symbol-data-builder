@@ -7,7 +7,7 @@ use PHPWatch\SymbolData\DataSourceBase;
 use PHPWatch\SymbolData\Output;
 
 class INIListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'ini';
+    const NAME = 'ini';
 
     /**
      * @var array
@@ -18,11 +18,11 @@ class INIListSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void {
+    public function addDataToOutput(Output $output) {
         static::handleIniList($this->data, $output);
     }
 
-    private static function handleIniList(array $iniList, Output $output): void {
+    private static function handleIniList(array $iniList, Output $output) {
         $output->addData('ini', $iniList);
     }
 }

@@ -7,7 +7,7 @@ use PHPWatch\SymbolData\DataSourceBase;
 use PHPWatch\SymbolData\Output;
 
 class ConstantsSource extends DataSourceBase implements DataSource {
-    public const NAME = 'const';
+    const NAME = 'const';
 
     /**
      * @var array
@@ -18,11 +18,11 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void {
+    public function addDataToOutput(Output $output) {
         static::handleGroupedConstantList($this->data, $output);
     }
 
-    private static function handleGroupedConstantList(array $groupedConstList, Output $output): void {
+    private static function handleGroupedConstantList(array $groupedConstList, Output $output) {
         $output->addData('const', $groupedConstList);
 
         foreach ($groupedConstList as $groupName => $constList) {
@@ -30,7 +30,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function handleConstantList(string $groupName, array $constList, Output $output): void {
+    private static function handleConstantList(string $groupName, array $constList, Output $output) {
         foreach ($constList as $name => $value) {
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
@@ -63,7 +63,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $groupName, string $name): array {
+    private static function generateResources(string $groupName, string $name) {
         $urls = [
             'Core' => 'https://www.php.net/manual/reserved.constants.php',
             'curl' => 'https://www.php.net/manual/curl.constants.php',

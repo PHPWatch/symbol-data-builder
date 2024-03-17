@@ -8,7 +8,7 @@ use PHPWatch\SymbolData\Output;
 use ReflectionFunction;
 
 class FunctionsListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'function';
+    const NAME = 'function';
 
     /**
      * @var array
@@ -19,11 +19,11 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void {
+    public function addDataToOutput(Output $output) {
         static::handleFunctionList($this->data, $output);
     }
 
-    private static function handleFunctionList(array $functionList, Output $output): void {
+    private static function handleFunctionList(array $functionList, Output $output) {
         $output->addData('function', $functionList, true);
 
         foreach ($functionList as $name) {
@@ -61,7 +61,7 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $name): array {
+    private static function generateResources($name) {
         return [
             [
                 'name' => $name . ' function (php.net)',

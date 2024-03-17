@@ -11,18 +11,18 @@ class Output {
 
     private $flattedExport = [];
 
-    public function __construct(string $dir = 'scratch') {
+    public function __construct($dir = 'scratch') {
         $this->dir = $dir;
     }
 
-    public function addData(string $key, $data, bool $flattedExport = false): void {
+    public function addData($key, $data, $flattedExport = false) {
         $this->data[$key] = $data;
         if ($flattedExport) {
             $this->flattedExport[$key] = true;
         }
     }
 
-    public function write(): void {
+    public function write() {
         if (!is_dir($this->dir) && !mkdir($concurrentDirectory = $this->dir) && !is_dir($concurrentDirectory)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
@@ -53,7 +53,7 @@ class Output {
 
     }
 
-    private function postProcessFlatArray(string $export): string {
+    private function postProcessFlatArray($export) {
         return preg_replace('/^(?<indent>\s\s)(?<rm>(?:\d+)\s=>\s)(?<line>.*),$/m', '$1$3,', $export);
     }
 }

@@ -8,7 +8,7 @@ use PHPWatch\SymbolData\Output;
 use ReflectionClass;
 
 class InterfacesListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'interface';
+    const NAME = 'interface';
 
     /**
      * @var array
@@ -23,7 +23,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
         static::handleInterfaceList($this->data, $output);
     }
 
-    private static function handleInterfaceList(array $interfaceList, Output $output): void {
+    private static function handleInterfaceList(array $interfaceList, Output $output) {
         $output->addData('interface', $interfaceList, true);
 
         foreach ($interfaceList as $name) {
@@ -62,7 +62,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $name): array {
+    private static function generateResources($name) {
         return [
             [
                 'name' => $name . ' interface (php.net)',

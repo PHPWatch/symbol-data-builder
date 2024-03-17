@@ -5,7 +5,7 @@ namespace PHPWatch\SymbolData;
 use ReflectionClass;
 
 abstract class DataSourceBase implements DataSourceInterface {
-    protected static function generateDetailsAboutMethods(ReflectionClass $reflectionClass): array {
+    protected static function generateDetailsAboutMethods(ReflectionClass $reflectionClass) {
         $methods = [];
 
         foreach ($reflectionClass->getMethods() as $method) {

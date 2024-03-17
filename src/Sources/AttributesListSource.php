@@ -8,7 +8,7 @@ use PHPWatch\SymbolData\Output;
 use ReflectionClass;
 
 class AttributesListSource extends DataSourceBase implements DataSource {
-    public const NAME = 'attribute';
+    const NAME = 'attribute';
 
     /**
      * @var array
@@ -19,11 +19,11 @@ class AttributesListSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public function addDataToOutput(Output $output): void {
+    public function addDataToOutput(Output $output) {
         static::handleAttributeList($this->data, $output);
     }
 
-    private static function handleAttributeList(array $attributeList, Output $output): void {
+    private static function handleAttributeList(array $attributeList, Output $output) {
         $output->addData('attribute', $attributeList, true);
 
         foreach ($attributeList as $name) {
@@ -63,7 +63,7 @@ class AttributesListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $classname): array {
+    private static function generateResources(string $classname) {
         return [
             [
                 'name' => $classname . ' attribute (php.net)',
