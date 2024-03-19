@@ -63,11 +63,11 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
     }
 
     private static function generateResources($name) {
-        return [
-            [
+        return array(
+            array(
                 'name' => $name . ' interface (php.net)',
                 'url' => 'https://www.php.net/manual/class.' . str_replace('\\', '-', strtolower($name)) . '.php',
-            ],
-        ];
+            ),
+        );
     }
 }
