@@ -38,16 +38,16 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 $meta = require $metafile;
             } else {
                 // embed generic meta data
-                $meta = [
+                $meta = array(
                     'type' => 'class',
                     'name' => $reflection->getName(),
                     'description' => '',
-                    'keywords' => [],
+                    'keywords' => array(),
                     'added' => '0.0',
                     'deprecated' => null,
                     'removed' => null,
                     'resources' => static::generateResources($name),
-                ];
+                );
             }
 
             $output->addData('classes/' . $filename, array(

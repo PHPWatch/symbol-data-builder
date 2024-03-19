@@ -38,16 +38,16 @@ class TraitsListSource extends DataSourceBase implements DataSource {
                 $meta = require $metafile;
             } else {
                 // embed generic meta data
-                $meta = [
+                $meta = array(
                     'type' => 'trait',
                     'name' => $reflection->getName(),
                     'description' => '',
-                    'keywords' => [],
+                    'keywords' => array(),
                     'added' => '0.0',
                     'deprecated' => null,
                     'removed' => null,
-                    'resources' => [],
-                ];
+                    'resources' => array(),
+                );
             }
 
             $output->addData('traits/' . $filename, array(

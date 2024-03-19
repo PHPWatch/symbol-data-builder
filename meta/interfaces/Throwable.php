@@ -1,17 +1,17 @@
 <?php
 
-return [
+return array(
     'type' => 'interface',
     'name' => 'Throwable',
     'description' => '',
-    'keywords' => [],
+    'keywords' => array(),
     'added' => '7.0',
     'deprecated' => null,
     'removed' => null,
-    'resources' => [
-        [
+    'resources' => array(
+        array(
             'name' => 'Throwable class (php.net)',
             'url' => 'https://www.php.net/manual/en/class.throwable.php',
-        ],
-    ],
-];
+        ),
+    ),
+);

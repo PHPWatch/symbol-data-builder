@@ -33,7 +33,7 @@ class AttributesListSource extends DataSourceBase implements DataSource {
         foreach (get_declared_classes() as $name) {
             $reflection = new \ReflectionClass($name);
 
-            if ($reflection->getAttributes('Attribute') !== []) {
+            if ($reflection->getAttributes('Attribute') !== array()) {
                 $data[] = $reflection->getName();
             }
         }
@@ -60,16 +60,16 @@ class AttributesListSource extends DataSourceBase implements DataSource {
                 $meta = require $metafile;
             } else {
                 // embed generic meta data
-                $meta = [
+                $meta = array(
                     'type' => 'attribute',
                     'name' => $reflection->getName(),
                     'description' => '',
-                    'keywords' => [],
+                    'keywords' => array(),
                     'added' => '0.0',
                     'deprecated' => null,
                     'removed' => null,
                     'resources' => static::generateResources($name),
-                ];
+                );
             }
 
             $output->addData('attributes/' . $filename, array(
