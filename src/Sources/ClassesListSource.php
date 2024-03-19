@@ -16,7 +16,12 @@ class ClassesListSource extends DataSourceBase implements DataSource {
     private $data;
 
     public function __construct(array $data) {
+        $data = array_filter($data, '\PHPWatch\SymbolData\Sources\ClassesListSource::filterClassList');
         $this->data = $data;
+    }
+
+    public static function filterClassList($class) {
+        return strpos($class, 'Composer') !== 0;
     }
 
     public function addDataToOutput(Output $output) {
