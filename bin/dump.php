@@ -18,31 +18,10 @@ $PHPWatchSymbols = [
     'class' => get_declared_classes(),
     'trait' => get_declared_traits(),
     'interface' => get_declared_interfaces(),
-    'function' => get_defined_functions()['internal'],
+    'function' => FunctionsListSource::getData(),
     'ini' => ini_get_all(),
-    'attribute' => (function(): array {
-        $data = [];
-
-        if (!class_exists(\Attribute::class)) {
-            return $data;
-        }
-
-        foreach (get_declared_classes() as $name) {
-            $reflection = new \ReflectionClass($name);
-
-            if ($reflection->getAttributes(\Attribute::class) !== []) {
-                $data[] = $reflection->getName();
-            }
-        }
-
-        return $data;
-    })(),
-    'phpinfo' => (static function(): string {
-        ob_start();
-        // Do not include env of build info as they change in every build and run
-        phpinfo(INFO_CREDITS|INFO_LICENSE|INFO_MODULES|INFO_CONFIGURATION);
-        return ob_get_clean();
-    })(),
+    'attribute' => AttributesListSource::getData(),
+    'phpinfo' => PHPInfoSource::getData(),
 ];
 
 require __DIR__ . '/../vendor/autoload.php';

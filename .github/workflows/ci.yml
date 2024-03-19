@@ -7,11 +7,16 @@ on:
 jobs:
   run:
     runs-on: ${{ matrix.operating-system }}
-    name: PHP ${{ matrix.php-versions }} - Collect
+    name: PHP ${{ matrix.php-versions }} - Test
     strategy:
       matrix:
         operating-system: ['ubuntu-latest']
         php-versions:
+          - '5.4'
+          - '5.5'
+          - '5.6'
+          - '7.0'
+          - '7.1'
           - '7.2'
           - '7.3'
           - '7.4'
@@ -34,11 +39,8 @@ jobs:
           php -m
 
       - name: "Install Composer dependencies"
-        uses: "ramsey/composer-install@v3"
-
-      - name: Run phpunit tests
-        run: |
-          composer run phpunit
+        run:
+          composer dump-autoload
 
       - name: Dump data
         run: |
@@ -46,3 +48,7 @@ jobs:
 
       - name: List dirs
         run: find scratch | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+
+      - name: Run tests
+        run: |
+          php tests/test.php
