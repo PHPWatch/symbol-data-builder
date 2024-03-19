@@ -44,7 +44,7 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
                 $meta = require $metafile;
             } else {
                 // embed generic meta data
-                $meta = [
+                $meta = array(
                     'type' => 'function',
                     'name' => $reflection->getName(),
                     'description' => '',
@@ -53,7 +53,7 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
                     'deprecated' => null,
                     'removed' => null,
                     'resources' => static::generateResources($name),
-                ];
+                );
             }
 
             $output->addData('functions/' . $filename, array(
