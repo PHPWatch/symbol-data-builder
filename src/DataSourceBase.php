@@ -15,7 +15,7 @@ abstract class DataSourceBase implements DataSourceInterface {
                 $parameters[$parameter->getName()] = [
                     'position' => $parameter->getPosition(),
                     'name' => $parameter->getName(),
-                    'type' => ($parameter->getType() !== null) ? (string)$parameter->getType() : null,
+                    'type' => PHP_VERSION_ID >= 70000 ? (($parameter->getType() !== null) ? (string)$parameter->getType() : null) : null,
                     'is_optional' => $parameter->isOptional(),
                     'has_default_value' => $parameter->isDefaultValueAvailable(),
                     'default_value' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
@@ -32,8 +32,8 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'name' => $method->getName(),
                 'class' => $method->getDeclaringClass()->getName(),
                 'parameters' => $parameters,
-                'return_type' => ($method->getReturnType() !== null) ? (string)$method->getReturnType() : null,
-                'has_return_type' => $method->hasReturnType(),
+                'return_type' => PHP_VERSION_ID >= 70000 ? (($method->getReturnType() !== null) ? (string)$method->getReturnType() : null) : null,
+                'has_return_type' => PHP_VERSION_ID >= 70000 && $method->hasReturnType(),
                 'is_static' => $method->isStatic(),
                 'is_public' => $method->isPublic(),
                 'is_protected' => $method->isProtected(),
@@ -44,7 +44,7 @@ abstract class DataSourceBase implements DataSourceInterface {
         return $methods;
     }
 
-    protected static function generateDetailsAboutProperties(ReflectionClass $reflectionClass): array {
+    protected static function generateDetailsAboutProperties(ReflectionClass $reflectionClass) {
         $properties = [];
 
         foreach ($reflectionClass->getProperties() as $property) {
