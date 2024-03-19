@@ -31,7 +31,7 @@ $dumper = new Dumper(new Output());
 $dumper->addSource(new ExtensionListSource($PHPWatchSymbols['ext']));
 $dumper->addSource(new ConstantsSource($PHPWatchSymbols['const']));
 $dumper->addSource(new ClassesListSource($PHPWatchSymbols['class']));
-$dumper->addSource(new TraitsListSource($PHPWatchSymbols['trait']));
+$dumper->addSource(new TraitsListSource(isset($PHPWatchSymbols['trait']) ? $PHPWatchSymbols['trait'] : null));
 $dumper->addSource(new InterfacesListSource($PHPWatchSymbols['interface']));
 $dumper->addSource(new FunctionsListSource($PHPWatchSymbols['function']));
 $dumper->addSource(new INIListSource($PHPWatchSymbols['ini']));
