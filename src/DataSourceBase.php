@@ -33,7 +33,7 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'class' => $method->getDeclaringClass()->getName(),
                 'parameters' => $parameters,
                 'return_type' => PHP_VERSION_ID >= 70000 ? (($method->getReturnType() !== null) ? (string)$method->getReturnType() : null) : null,
-                'has_return_type' => PHP_VERSION_ID >= 70000 && $method->hasReturnType(),
+                'has_return_type' => PHP_VERSION_ID >= 70000 ? $method->hasReturnType() : null,
                 'is_static' => $method->isStatic(),
                 'is_public' => $method->isPublic(),
                 'is_protected' => $method->isProtected(),
