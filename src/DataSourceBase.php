@@ -20,10 +20,10 @@ abstract class DataSourceBase implements DataSourceInterface {
                     'has_default_value' => $parameter->isDefaultValueAvailable(),
                     'default_value' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
                     'has_default_value_constant' => $parameter->isDefaultValueAvailable()
-                        && $parameter->isDefaultValueConstant(),
+                        && (PHP_VERSION_ID >= 50400 ? $parameter->isDefaultValueConstant() : null),
                     'default_value_constant' =>
                         $parameter->isDefaultValueAvailable()
-                            ? $parameter->getDefaultValueConstantName()
+                            ? (PHP_VERSION_ID >= 50400 ? $parameter->getDefaultValueConstantName() : null)
                             : null,
                 );
             }
