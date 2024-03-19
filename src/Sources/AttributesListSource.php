@@ -86,11 +86,11 @@ class AttributesListSource extends DataSourceBase implements DataSource {
     }
 
     private static function generateResources($classname) {
-        return [
-            [
+        return array(
+            array(
                 'name' => $classname . ' attribute (php.net)',
                 'url' => 'https://www.php.net/manual/class.' . strtolower($classname) . '.php',
-            ],
-        ];
+            ),
+        );
     }
 }
