@@ -27,7 +27,7 @@ class Output {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
 
-        $dirCache = [];
+        $dirCache = array();
 
         foreach ($this->data as $key => $data) {
             $filename = $this->dir . '/' . $key . '.php';
