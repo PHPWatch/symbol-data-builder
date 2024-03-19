@@ -50,7 +50,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 ];
             }
 
-            $output->addData('classes/' . $filename, [
+            $output->addData('classes/' . $filename, array(
                 'type' => 'class',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
@@ -58,27 +58,27 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 'constants' => $reflection->getConstants(),
                 'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
-                'traits' => $reflection->getTraitNames(),
+                'traits' => PHP_VERSION_ID >= 50400 ? $reflection->getTraitNames() : null,
                 'is_abstract' => $reflection->isAbstract(),
                 'is_anonymous' => PHP_VERSION_ID >= 70000 ? ($reflection->isAnonymous()) : null,
-                'is_cloneable' => $reflection->isCloneable(),
+                'is_cloneable' => PHP_VERSION_ID >= 50400 ? $reflection->isCloneable() : null,
                 'is_final' => $reflection->isFinal(),
                 'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
-            ]);
+            ));
         }
     }
 
     private static function generateResources($classname) {
         // ignore classes without manual entry, currently only __PHP_Incomplete_Class
         if ($classname === '__PHP_Incomplete_Class') {
-            return [];
+            return array();
         }
 
-        return [
-            [
+        return array(
+            array(
                 'name' => $classname . ' class (php.net)',
                 'url' => 'https://www.php.net/manual/class.' . str_replace('\\', '-', strtolower($classname)) . '.php',
-            ],
-        ];
+            ),
+        );
     }
 }

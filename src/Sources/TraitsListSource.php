@@ -50,7 +50,7 @@ class TraitsListSource extends DataSourceBase implements DataSource {
                 ];
             }
 
-            $output->addData('traits/' . $filename, [
+            $output->addData('traits/' . $filename, array(
                 'type' => 'trait',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
@@ -58,13 +58,13 @@ class TraitsListSource extends DataSourceBase implements DataSource {
                 'constants' => $reflection->getConstants(),
                 'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
-                'traits' => $reflection->getTraitNames(),
+                'traits' => PHP_VERSION_ID >= 50400 ? $reflection->getTraitNames() : null,
                 'is_abstract' => $reflection->isAbstract(),
-                'is_anonymous' => $reflection->isAnonymous(),
-                'is_cloneable' => $reflection->isCloneable(),
+                'is_anonymous' => PHP_VERSION_ID >= 70000 ? $reflection->isAnonymous() : null,
+                'is_cloneable' => PHP_VERSION_ID >= 50400 ? $reflection->isCloneable() : null,
                 'is_final' => $reflection->isFinal(),
                 'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
-            ]);
+            ));
         }
     }
 }

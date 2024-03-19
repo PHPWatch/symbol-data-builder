@@ -6,13 +6,13 @@ use ReflectionClass;
 
 abstract class DataSourceBase implements DataSourceInterface {
     protected static function generateDetailsAboutMethods(ReflectionClass $reflectionClass) {
-        $methods = [];
+        $methods = array();
 
         foreach ($reflectionClass->getMethods() as $method) {
-            $parameters = [];
+            $parameters = array();
 
             foreach ($method->getParameters() as $parameter) {
-                $parameters[$parameter->getName()] = [
+                $parameters[$parameter->getName()] = array(
                     'position' => $parameter->getPosition(),
                     'name' => $parameter->getName(),
                     'type' => PHP_VERSION_ID >= 70000 ? (($parameter->getType() !== null) ? (string)$parameter->getType() : null) : null,
@@ -25,10 +25,10 @@ abstract class DataSourceBase implements DataSourceInterface {
                         $parameter->isDefaultValueAvailable()
                             ? $parameter->getDefaultValueConstantName()
                             : null,
-                ];
+                );
             }
 
-            $methods[$method->getName()] = [
+            $methods[$method->getName()] = array(
                 'name' => $method->getName(),
                 'class' => $method->getDeclaringClass()->getName(),
                 'parameters' => $parameters,
@@ -38,17 +38,17 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'is_public' => $method->isPublic(),
                 'is_protected' => $method->isProtected(),
                 'is_private' => $method->isPrivate(),
-            ];
+            );
         }
 
         return $methods;
     }
 
     protected static function generateDetailsAboutProperties(ReflectionClass $reflectionClass) {
-        $properties = [];
+        $properties = array();
 
         foreach ($reflectionClass->getProperties() as $property) {
-            $properties[$property->getName()] = [
+            $properties[$property->getName()] = array(
                 'name' => $property->getName(),
                 'class' => $property->getDeclaringClass()->getName(),
                 'type' => (method_exists($property, 'getType') && $property->getType() !== null)
@@ -61,7 +61,7 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'is_protected' => $property->isProtected(),
                 'is_private' => $property->isPrivate(),
                 'is_promoted' => method_exists($property, 'isPromoted') && $property->isPromoted(),
-            ];
+            );
         }
 
         return $properties;

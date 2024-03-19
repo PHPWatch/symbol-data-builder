@@ -50,7 +50,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
                 ];
             }
 
-            $output->addData('interfaces/' . $filename, [
+            $output->addData('interfaces/' . $filename, array(
                 'type' => 'interface',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
@@ -58,7 +58,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
                 'constants' => $reflection->getConstants(),
                 'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
-            ]);
+            ));
         }
     }
 

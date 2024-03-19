@@ -56,23 +56,23 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
                 ];
             }
 
-            $output->addData('functions/' . $filename, [
+            $output->addData('functions/' . $filename, array(
                 'type' => 'function',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
-                'parameters' => [], // #todo
-                'return' => [], // #todo
+                'parameters' => array(), // #todo
+                'return' => array(), // #todo
                 'extension' => $reflection->getExtensionName(),
-            ]);
+            ));
         }
     }
 
     private static function generateResources($name) {
-        return [
-            [
+        return array(
+            array(
                 'name' => $name . ' function (php.net)',
                 'url' => 'https://www.php.net/manual/function.' . str_replace('_', '-', strtolower($name)) . '.php',
-            ],
-        ];
+            ),
+        );
     }
 }

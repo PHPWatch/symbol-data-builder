@@ -50,33 +50,33 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
                 ];
             }
 
-            $output->addData('extensions/' . $filename, [
+            $output->addData('extensions/' . $filename, array(
                 'type' => 'extension',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
-                'classes' => [], // #todo
-                'constants' => [], // #todo
-                'dependencies' => [], // #todo
-                'functions' => [], // #todo
-                'ini' => [], // #todo
-            ]);
+                'classes' => array(), // #todo
+                'constants' => array(), // #todo
+                'dependencies' => array(), // #todo
+                'functions' => array(), // #todo
+                'ini' => array(), // #todo
+            ));
         }
     }
 
     private static function generateResources($extName) {
         // ignore extensions without manual entry
-        if (in_array($extName, [
+        if (in_array($extName, array(
             'Core',
             'standard',
-        ])) {
-            return [];
+        ))) {
+            return array();
         }
 
-        return [
-            [
+        return array(
+            array(
                 'name' => $extName . ' extension (php.net)',
                 'url' => 'https://www.php.net/manual/book.' . str_replace('\\', '-', strtolower($extName)) . '.php',
-            ],
-        ];
+            ),
+        );
     }
 }

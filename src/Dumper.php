@@ -6,7 +6,7 @@ class Dumper {
     /**
      * @var DataSource[]
      */
-    private $sources = [];
+    private $sources = array();
 
     /**
      * @var Output

@@ -53,25 +53,25 @@ class ConstantsSource extends DataSourceBase implements DataSource {
                 ];
             }
 
-            $output->addData('constants/' . $filename, [
+            $output->addData('constants/' . $filename, array(
                 'type' => 'constant',
                 'name' => $name,
                 'meta' => $meta,
                 'value' => $value,
                 'extension' => $groupName,
-            ]);
+            ));
         }
     }
 
     private static function generateResources($groupName, $name) {
-        $urls = [
+        $urls = array(
             'Core' => 'https://www.php.net/manual/reserved.constants.php',
             'curl' => 'https://www.php.net/manual/curl.constants.php',
             'date' => 'https://www.php.net/manual/class.datetimeinterface.php',
-        ];
+        );
 
         if (!array_key_exists($groupName, $urls)) {
-            return [];
+            return array();
         }
 
         $url = $urls[$groupName];
@@ -88,11 +88,11 @@ class ConstantsSource extends DataSourceBase implements DataSource {
 
         $anchorName = str_replace('_', '-', strtolower($anchorName));
 
-        return [
-            [
+        return array(
+            array(
                 'name' => $name . ' constant (php.net)',
                 'url' => $url . '#' . $anchorName,
-            ],
-        ];
+            ),
+        );
     }
 }

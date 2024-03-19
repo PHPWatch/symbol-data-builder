@@ -5,11 +5,11 @@ namespace PHPWatch\SymbolData;
 use RuntimeException;
 
 class Output {
-    private $data = [];
+    private $data = array();
 
     private $dir;
 
-    private $flattedExport = [];
+    private $flattedExport = array();
 
     public function __construct($dir = 'scratch') {
         $this->dir = $dir;

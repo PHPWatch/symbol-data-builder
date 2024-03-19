@@ -20,10 +20,10 @@ class AttributesListSource extends DataSourceBase implements DataSource {
     }
 
     public static function getData() {
-        $data = [];
+        $data = array();
 
         if (PHP_VERSION_ID < 80000) {
-            return [];
+            return array();
         }
 
         if (!class_exists('Attribute', false)) {
@@ -72,7 +72,7 @@ class AttributesListSource extends DataSourceBase implements DataSource {
                 ];
             }
 
-            $output->addData('attributes/' . $filename, [
+            $output->addData('attributes/' . $filename, array(
                 'type' => 'attribute',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
@@ -80,8 +80,8 @@ class AttributesListSource extends DataSourceBase implements DataSource {
                 'constants' => $reflection->getConstants(),
                 'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
-                'traits' => $reflection->getTraitNames(),
-            ]);
+                'traits' => PHP_VERSION_ID >= 50400 ? $reflection->getTraitNames() : null,
+            ));
         }
     }
 
