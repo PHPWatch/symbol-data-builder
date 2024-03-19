@@ -2,7 +2,6 @@
 
 namespace Tests\PHPWatch\SymbolData;
 
-use PHPUnit\Framework\TestCase;
 use PHPWatch\SymbolData\DataSource;
 use PHPWatch\SymbolData\Dumper;
 use PHPWatch\SymbolData\Output;
