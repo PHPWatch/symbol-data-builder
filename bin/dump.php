@@ -12,6 +12,8 @@ use PHPWatch\SymbolData\Sources\InterfacesListSource;
 use PHPWatch\SymbolData\Sources\PHPInfoSource;
 use PHPWatch\SymbolData\Sources\TraitsListSource;
 
+require __DIR__ . '/../vendor/autoload.php';
+
 $PHPWatchSymbols = [
     'ext' => get_loaded_extensions(),
     'const' => get_defined_constants(true),
@@ -23,8 +25,6 @@ $PHPWatchSymbols = [
     'attribute' => AttributesListSource::getData(),
     'phpinfo' => PHPInfoSource::getData(),
 ];
-
-require __DIR__ . '/../vendor/autoload.php';
 
 $dumper = new Dumper(new Output());
 
