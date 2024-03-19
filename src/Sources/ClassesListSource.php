@@ -68,7 +68,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $classname) {
+    private static function generateResources($classname) {
         // ignore classes without manual entry, currently only __PHP_Incomplete_Class
         if ($classname === '__PHP_Incomplete_Class') {
             return [];

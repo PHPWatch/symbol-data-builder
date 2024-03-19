@@ -30,7 +30,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function handleConstantList(string $groupName, array $constList, Output $output) {
+    private static function handleConstantList($groupName, array $constList, Output $output) {
         foreach ($constList as $name => $value) {
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
@@ -63,7 +63,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         }
     }
 
-    private static function generateResources(string $groupName, string $name) {
+    private static function generateResources($groupName, $name) {
         $urls = [
             'Core' => 'https://www.php.net/manual/reserved.constants.php',
             'curl' => 'https://www.php.net/manual/curl.constants.php',
