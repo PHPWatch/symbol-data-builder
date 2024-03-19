@@ -14,17 +14,17 @@ use PHPWatch\SymbolData\Sources\TraitsListSource;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$PHPWatchSymbols = [
+$PHPWatchSymbols = array(
     'ext' => get_loaded_extensions(),
     'const' => get_defined_constants(true),
     'class' => get_declared_classes(),
-    'trait' => get_declared_traits(),
+    'trait' => PHP_VERSION_ID >= 50400 ? get_declared_traits() : null,
     'interface' => get_declared_interfaces(),
     'function' => FunctionsListSource::getData(),
     'ini' => ini_get_all(),
     'attribute' => AttributesListSource::getData(),
     'phpinfo' => PHPInfoSource::getData(),
-];
+);
 
 $dumper = new Dumper(new Output());
 
