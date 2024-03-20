@@ -22,13 +22,6 @@ class PHPInfoSource extends DataSourceBase implements DataSource {
         static::handlePhpinfoString($this->data, $output);
     }
 
-    public static function getData() {
-        ob_start();
-        // Do not include env of build info as they change in every build and run
-        phpinfo(INFO_CREDITS|INFO_LICENSE|INFO_MODULES|INFO_CONFIGURATION);
-        return ob_get_clean();
-    }
-
     private static function handlePhpinfoString($phpinfo, Output $output) {
         $output->addData('phpinfo', static::postProcess($phpinfo));
     }
