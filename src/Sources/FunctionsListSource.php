@@ -19,12 +19,6 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public static function getData() {
-        /** @noinspection PotentialMalwareInspection */
-        $funcs = get_defined_functions();
-        return $funcs['internal'];
-    }
-
     public function addDataToOutput(Output $output) {
         static::handleFunctionList($this->data, $output);
     }

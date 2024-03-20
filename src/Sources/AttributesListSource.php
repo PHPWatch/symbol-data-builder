@@ -19,28 +19,6 @@ class AttributesListSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
-    public static function getData() {
-        $data = array();
-
-        if (PHP_VERSION_ID < 80000) {
-            return array();
-        }
-
-        if (!class_exists('Attribute', false)) {
-            return $data;
-        }
-
-        foreach (get_declared_classes() as $name) {
-            $reflection = new \ReflectionClass($name);
-
-            if ($reflection->getAttributes('Attribute') !== array()) {
-                $data[] = $reflection->getName();
-            }
-        }
-
-        return $data;
-    }
-
     public function addDataToOutput(Output $output) {
         static::handleAttributeList($this->data, $output);
     }
