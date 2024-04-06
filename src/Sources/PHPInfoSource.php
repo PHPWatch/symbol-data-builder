@@ -27,8 +27,23 @@ class PHPInfoSource extends DataSourceBase implements DataSource {
     }
 
     private static function postProcess($output) {
+        // Replace "compiled date" and "build date" with __DYNAMIC__"
         $re = '/^(Compiled|Build date)( => )(?<dynamic>.*?)$/mi';
         $subst = "$1$2__DYNAMIC__";
-        return preg_replace($re, $subst, $output);
+        $output = preg_replace($re, $subst, $output);
+
+        // Sort enchant providers list
+        var_dump($output);
+        $regex = '@enchant support => enabled.*?Revision.*?(?<libs>(((?:i|my|h|a)spell) => (I|My|H|A)spell Provider => /usr/lib/enchant/libenchant_(?:i|my|h|a)spell\.so\n)?(((?:i|my|h|a)spell) => (I|My|H|A)spell Provider => /usr/lib/enchant/libenchant_(?:i|my|h|a)spell\.so\n)?(((?:i|my|h|a)spell) => (I|My|H|A)spell Provider => /usr/lib/enchant/libenchant_(?:i|my|h|a)spell\.so\n)?((((?:i|my|h|a)spell) => (I|My|H|A)spell Provider => /usr/lib/enchant/libenchant_(?:i|my|h|a)spell\.so\n)))@s';
+        if (preg_match($regex, $output, $matches)) {
+            $lines = preg_split('/(\r|\n|\r\n)+/', $matches['libs']);
+            sort($lines);
+            $lines = implode("\n", $lines);
+
+            $output = str_replace($matches['libs'], $lines, $output);
+        }
+
+
+        return $output;
     }
 }
