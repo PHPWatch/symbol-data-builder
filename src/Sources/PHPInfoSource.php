@@ -34,7 +34,7 @@ class PHPInfoSource extends DataSourceBase implements DataSource {
 
         // Sort enchant providers list
         var_dump($output);
-        $regex = '@enchant support => enabled.*?Revision.*?(?<libs>(((?:i|my|h|a)spell) => (I|My|H|A)spell Provider => /usr/lib/enchant/libenchant_(?:i|my|h|a)spell\.so\n)?(((?:i|my|h|a)spell) => (I|My|H|A)spell Provider => /usr/lib/enchant/libenchant_(?:i|my|h|a)spell\.so\n)?(((?:i|my|h|a)spell) => (I|My|H|A)spell Provider => /usr/lib/enchant/libenchant_(?:i|my|h|a)spell\.so\n)?((((?:i|my|h|a)spell) => (I|My|H|A)spell Provider => /usr/lib/enchant/libenchant_(?:i|my|h|a)spell\.so\n)))@s';
+        $regex = '@enchant support => enabled.*?Revision.*?$\n(?<libs>.*)\nereg@s';
         if (preg_match($regex, $output, $matches)) {
             $lines = preg_split('/(\r|\n|\r\n)+/', $matches['libs']);
             sort($lines);
