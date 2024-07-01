@@ -44,22 +44,31 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
                     'description' => '',
                     'keywords' => array(),
                     'added' => '0.0',
-                    'deprecated' => null,
+                    'deprecated' => $reflection,
                     'removed' => null,
+                    'version' => $reflection->getVersion(),
                     'resources' => static::generateResources($name),
                 );
+            }
+
+            $entries = array(
+                'classes' => $reflection->getClassNames(),
+                'functions' => array(),
+                'constants' => $reflection->getConstants(),
+                'dependencies' => array(),
+                'ini' => $reflection->getINIEntries(),
+            );
+
+            $functions = $reflection->getFunctions();
+            foreach ($functions as $function) {
+                $entries['functions'][$function->getName()] = $function->getName();
             }
 
             $output->addData('extensions/' . $filename, array(
                 'type' => 'extension',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
-                'classes' => array(), // #todo
-                'constants' => array(), // #todo
-                'dependencies' => array(), // #todo
-                'functions' => array(), // #todo
-                'ini' => array(), // #todo
-            ));
+            ) + $entries);
         }
     }
 
