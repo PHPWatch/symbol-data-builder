@@ -24,10 +24,15 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
     }
 
     private static function handleFunctionList(array $functionList, Output $output) {
-        $output->addData('function', $functionList, true);
+        $filteredFunctions = array();
 
         foreach ($functionList as $name) {
             $reflection = new ReflectionFunction($name);
+            if ($reflection->isUserDefined()) {
+                continue;
+            }
+
+            $filteredFunctions[$name] = $name;
 
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
@@ -43,22 +48,33 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
                     'name' => $reflection->getName(),
                     'description' => '',
                     'keywords' => array(),
-                    'added' => null,
-                    'deprecated' => null,
-                    'removed' => null,
+                    'deprecated' => $reflection->isDeprecated(),
                     'resources' => static::generateResources($name),
                 );
             }
+
+            $returnType = null;
+            if (PHP_VERSION_ID >= 70000 && $returnType = $reflection->getReturnType()) {
+                $returnType = [
+                    'type' => $returnType,
+                    'nullable' => $returnType->allowsNull(),
+                ];
+            }
+
 
             $output->addData('functions/' . $filename, array(
                 'type' => 'function',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
+                'doc' => $reflection->getDocComment(),
                 'parameters' => array(), // #todo
-                'return' => array(), // #todo
+                'return' => $returnType,
                 'extension' => $reflection->getExtensionName(),
+                'toString' => $reflection->__toString(),
             ));
         }
+
+        $output->addData('function', $functionList, true);
     }
 
     private static function generateResources($name) {

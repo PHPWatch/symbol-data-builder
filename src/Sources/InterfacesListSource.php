@@ -58,6 +58,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
                 'constants' => $reflection->getConstants(),
                 'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
+                'toString' => $reflection->__toString(),
             ));
         }
     }

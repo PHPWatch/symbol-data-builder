@@ -64,6 +64,7 @@ class TraitsListSource extends DataSourceBase implements DataSource {
                 'is_cloneable' => PHP_VERSION_ID >= 50400 ? $reflection->isCloneable() : null,
                 'is_final' => $reflection->isFinal(),
                 'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
+                'toString' => $reflection->__toString(),
             ));
         }
     }
