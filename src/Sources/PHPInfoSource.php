@@ -32,8 +32,6 @@ class PHPInfoSource extends DataSourceBase implements DataSource {
         $subst = "$1$2__DYNAMIC__";
         $output = preg_replace($re, $subst, $output);
 
-        // Sort enchant providers list
-        var_dump($output);
         $regex = '@enchant support => enabled.*?Revision.*?$\n(?<libs>.*)\nereg@s';
         if (preg_match($regex, $output, $matches)) {
             $lines = preg_split('/(\r|\n|\r\n)+/', $matches['libs']);
