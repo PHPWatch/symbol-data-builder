@@ -56,7 +56,7 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
             $returnType = null;
             if (PHP_VERSION_ID >= 70000 && $returnType = $reflection->getReturnType()) {
                 $returnType = array(
-                    'type' => $returnType,
+                    'type' => get_class($returnType),
                     'nullable' => $returnType->allowsNull(),
                 );
             }
