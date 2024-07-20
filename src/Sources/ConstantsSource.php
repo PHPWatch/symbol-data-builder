@@ -14,14 +14,39 @@ class ConstantsSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
+    private static $lastError = null;
+
     public function __construct(array $data) {
         $this->data = $data;
     }
 
+    protected static function clearDeprecationLastError() {
+        self::$lastError = null;
+    }
+
+    public static function callErrorHandler($noop, $message) {
+        self::$lastError = $message;
+    }
+
+    public static function getLastErrorMessage() {
+        return self::$lastError;
+    }
+
     private static function isConstantDeprecated($name) {
+        set_error_handler(array('\PHPWatch\SymbolData\Sources\ConstantsSource', 'callErrorHandler'), E_ALL);
+        self::clearDeprecationLastError();
         @constant($name);
-        $error = error_get_last();
-        return stripos($error['message'], 'deprecate') !== false;
+        restore_error_handler();
+
+        $message = self::getLastErrorMessage();
+
+        if (empty($message)) {
+            return false;
+        }
+
+        return stripos($message, 'deprecate')
+            ? $message
+            : false;
     }
 
     public function addDataToOutput(Output $output) {
@@ -47,13 +72,16 @@ class ConstantsSource extends DataSourceBase implements DataSource {
                 $meta = require $metafile;
             } else {
                 // embed generic meta data
+
+                $deprecated = self::isConstantDeprecated($name);
                 $meta = array(
                     'type' => 'constant',
                     'name' => $name,
                     'description' => '',
                     'keywords' => array(),
                     'added' => '0.0',
-                    'deprecated' => self::isConstantDeprecated($name),
+                    'deprecated' => $deprecated !== false,
+                    'deprecated_message' => $deprecated !== false ? $deprecated : null,
                     'removed' => null,
                     'resources' => static::generateResources($groupName, $name),
                 );
