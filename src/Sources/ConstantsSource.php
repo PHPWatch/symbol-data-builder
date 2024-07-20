@@ -18,6 +18,12 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         $this->data = $data;
     }
 
+    private static function isConstantDeprecated($name) {
+        @constant($name);
+        $error = error_get_last();
+        return stripos($error['message'], 'deprecate') !== false;
+    }
+
     public function addDataToOutput(Output $output) {
         static::handleGroupedConstantList($this->data, $output);
     }
@@ -47,7 +53,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
                     'description' => '',
                     'keywords' => array(),
                     'added' => '0.0',
-                    'deprecated' => null,
+                    'deprecated' => self::isConstantDeprecated($name),
                     'removed' => null,
                     'resources' => static::generateResources($groupName, $name),
                 );
