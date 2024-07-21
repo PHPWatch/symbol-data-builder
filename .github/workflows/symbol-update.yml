@@ -7,12 +7,11 @@ on:
 
 jobs:
   run:
-    runs-on: ${{ matrix.operating-system }}
-    name: PHP ${{ matrix.php-versions }} - Dump
+    runs-on: ubuntu-latest
+    name: PHP ${{ matrix.php-version }} - Dump
     strategy:
       matrix:
-        operating-system: ['ubuntu-latest']
-        php-versions:
+        php-version:
           - '5.3'
           - '5.4'
           - '5.5'
@@ -32,10 +31,15 @@ jobs:
 
       - name: Setup PHP
         uses: shivammathur/setup-php@verbose
+        if: matrix.php-version != '8.4' # Instead of using setup-php, compile PHP from source instead.
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
         env:
           update: true
+
+      - name: Compile and Setup PHP
+        uses: PHPWatch/compile-php@main
+        if: matrix.php-version == '8.4' # PHP 8.4 is the current `master` branch.
 
       - name: Display versions and env
         run: |
@@ -53,7 +57,7 @@ jobs:
       - name: Upload data
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.php-versions }}
+          name: ${{ matrix.php-version }}
           path: scratch
 
   collect:
