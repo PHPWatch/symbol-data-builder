@@ -12,20 +12,34 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - '5.3'
-          - '5.4'
-          - '5.5'
-          - '5.6'
-          - '7.0'
-          - '7.1'
-          - '7.2'
-          - '7.3'
-          - '7.4'
-          - '8.0'
-          - '8.1'
-          - '8.2'
-          - '8.3'
-          - '8.4'
+          - version: '5.3'
+            extensions: none, bcmath, bz2, calendar, com_dotnet, Core, ctype, curl, date, dba, dom, enchant, ereg, exif, fileinfo, filter, ftp, gd, gettext, gmp, hash, iconv, imap, interbase, intl, json, ldap, libxml, mbstring, mcrypt, mysql, mysqli, mysqlnd, oci8, odbc, openssl, pcntl, pcre, PDO, pdo_dblib, pdo_firebird, pdo_mysql, PDO_oci, PDO_ODBC, pdo_pgsql, pdo_sqlite, pgsql, Phar, posix, pspell, readline, recode, Reflection, session, shmop, SimpleXML, snmp, soap, sockets, SPL, SQLite, sqlite3, standard, sybase_ct, sysvmsg, sysvsem, sysvshm, tidy, tokenizer, wddx, xml, xmlreader, xmlrpc, xmlwriter, xsl, zip, zlib, opcache
+          - version: '5.4'
+            extensions: ''
+          - version: '5.5'
+            extensions: ''
+          - version: '5.6'
+            extensions: ''
+          - version: '7.0'
+            extensions: ''
+          - version: '7.1'
+            extensions: ''
+          - version: '7.2'
+            extensions: ''
+          - version: '7.3'
+            extensions: ''
+          - version: '7.4'
+            extensions: ''
+          - version: '8.0'
+            extensions: ''
+          - version: '8.1'
+            extensions: ''
+          - version: '8.2'
+            extensions: ''
+          - version: '8.3'
+            extensions: ''
+          - version: '8.4' # Compile
+            extensions: '' # Not relevant
     steps:
       - uses: actions/checkout@v4
 
@@ -33,7 +47,7 @@ jobs:
         uses: shivammathur/setup-php@verbose
         if: matrix.php-version != '8.4' # Instead of using setup-php, compile PHP from source instead.
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: ${{ matrix.php-version.version }}
         env:
           update: true
 
