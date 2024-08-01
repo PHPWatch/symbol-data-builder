@@ -48,6 +48,7 @@ jobs:
         if: matrix.php-version != '8.4' # Instead of using setup-php, compile PHP from source instead.
         with:
           php-version: ${{ matrix.php-version.version }}
+          extensions: ${{ matrix.php-version.extensions }}
         env:
           update: true
 
