@@ -48,5 +48,29 @@ class INIListSource extends DataSourceBase implements DataSource {
         }
 
         $output->addData('ini', $indexedInis);
+        $iniContents = self::getOriginIniFiles();
+        $output->addData('ini/development.ini', $iniContents['development']);
+        $output->addData('ini/production.ini', $iniContents['production']);
+    }
+
+    private static function getOriginIniFiles() {
+        $return = array();
+        $version = explode('.', PHP_VERSION);
+        $version = $version[0] . '.'. $version[1];
+
+        if ($version === '8.4') {
+            $branch = 'master';
+        }
+        else {
+            $branch = 'PHP-' . $version;
+        }
+
+        $devContents = file_get_contents('https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-development');
+        $prodContents = file_get_contents('https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-production');
+
+        $return['development'] = $devContents;
+        $return['production'] = $prodContents;
+
+        return $return;
     }
 }
