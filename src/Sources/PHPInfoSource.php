@@ -28,7 +28,7 @@ class PHPInfoSource extends DataSourceBase implements DataSource {
 
     private static function postProcess($output) {
         // Replace "compiled date" and "build date" with __DYNAMIC__"
-        $re = '/^(Compiled|Build date)( => )(?<dynamic>.*?)$/mi';
+        $re = '/^(Compiled|Build date|Start time)( => )(?<dynamic>.*?)$/mi';
         $subst = "$1$2__DYNAMIC__";
         $output = preg_replace($re, $subst, $output);
 
