@@ -85,6 +85,12 @@ jobs:
 
       - name: Prime files
         run: |
+          cp -Rf data/.git data-repo-meta
+          cp data/README.md data-README.md
+          rm data -Rf
+          mkdir data
+          mv data-repo-meta data/.git 
+          mv data-README.md data/README.md 
           cp scratch/* data/ -Rf
 
       - name: List dirs
