@@ -62,7 +62,7 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
             }
 
 
-            $output->addData('functions/' . $filename, array(
+            $info = array(
                 'type' => 'function',
                 'name' => $reflection->getName(),
                 'meta' => $meta,
@@ -71,7 +71,35 @@ class FunctionsListSource extends DataSourceBase implements DataSource {
                 'return' => $returnType,
                 'extension' => $reflection->getExtensionName(),
                 'toString' => $reflection->__toString(),
-            ));
+            );
+
+            if (PHP_VERSION_ID >= 80000) {
+                $fnAttrData = array();
+                $fnAttrs = $reflection->getAttributes();
+                foreach ($fnAttrs as $attr) {
+                    $fnAttrData['__self'][] = array(
+                        'attribute' => $attr->getName(),
+                        'params' => $attr->getArguments(),
+                    );
+                }
+
+                $params = $reflection->getParameters();
+                foreach ($params as $param) {
+                    $paramAttrs = $param->getAttributes();
+                    foreach ($paramAttrs as $attr) {
+                        $fnAttrData['params'][$param->getName()][] = array(
+                            'attribute' => $attr->getName(),
+                            'params' => $attr->getArguments(),
+                        );
+                    }
+                }
+
+                if ($fnAttrData) {
+                    $info['attributes'] = $fnAttrData;
+                }
+            }
+
+            $output->addData('functions/' . $filename, $info);
         }
 
         $output->addData('function', $functionList, true);
