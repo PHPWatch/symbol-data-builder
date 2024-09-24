@@ -58,7 +58,7 @@ class INIListSource extends DataSourceBase implements DataSource {
         $version = explode('.', PHP_VERSION);
         $version = $version[0] . '.'. $version[1];
 
-        if ($version === '8.4') {
+        if ($version === '8.5') {
             $branch = 'master';
         }
         else {
