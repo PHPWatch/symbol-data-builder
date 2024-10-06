@@ -38,7 +38,7 @@ jobs:
         env:
           update: true
 
-      - name: Compile and Setup PHP
+      - name: Compile and Setup PHP (${{ matrix.php-version }})
         uses: PHPWatch/compile-php@main
         if: matrix.php-version == '8.4' # Instead of using setup-php, compile PHP from source instead.
         with:
@@ -46,11 +46,13 @@ jobs:
         env:
           update: true
 
-      - name: Compile and Setup PHP
+      - name: Compile and Setup PHP (${{ matrix.php-version }})
         uses: PHPWatch/compile-php@main
-        if: matrix.php-version == '8.5' # PHP 8.4 is the current `master` branch.
+        if: matrix.php-version == '8.5' # PHP 8.5 is the current `master` branch.
         with:
-          branch: PHP-8.4
+          branch: master
+        env:
+          update: true
 
       - name: Display versions and env
         run: |
