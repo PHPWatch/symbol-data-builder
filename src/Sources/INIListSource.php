@@ -15,6 +15,8 @@ class INIListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
+    private static $lastError = null;
+
     public function __construct(array $data) {
         $this->data = $data;
     }
@@ -38,6 +40,10 @@ class INIListSource extends DataSourceBase implements DataSource {
 
         foreach ($indexedInis as $ext => $extIniList) {
             foreach ($extIniList as $iniName => $noOp) {
+                $deprecated = self::checkIfIniDeprecated($iniName, $iniList[$iniName]);
+                if ($deprecated) {
+                    $iniList[$iniName]['deprecated'] = $deprecated;
+                }
                 $indexedInis[$ext][$iniName] = $iniList[$iniName];
                 unset($iniListPool[$iniName]);
             }
@@ -72,5 +78,66 @@ class INIListSource extends DataSourceBase implements DataSource {
         $return['production'] = $prodContents;
 
         return $return;
+    }
+
+    private static function checkIfIniDeprecated($iniName, array $iniDef) {
+        if (!($iniDef['access'] & INI_USER)) {
+            return null;
+        }
+
+        $existingValue = ini_get($iniName);
+        $mutatedValue = self::getMutatedIniValue($iniName, $existingValue, $iniDef);
+
+        if ($mutatedValue === null) {
+            return null;
+        }
+
+        set_error_handler(array('\PHPWatch\SymbolData\Sources\INIListSource', 'callErrorHandler'), E_ALL);
+        self::clearDeprecationLastError();
+        ini_set($iniName, $mutatedValue);
+        ini_set($iniName, $existingValue);
+        restore_error_handler();
+
+        $message = self::getLastErrorMessage();
+
+        if (empty($message)) {
+            return false;
+        }
+
+        return stripos($message, 'deprecate')
+            ? $message
+            : false;
+    }
+
+    public static function callErrorHandler($noop, $message) {
+        self::$lastError = $message;
+    }
+
+    protected static function clearDeprecationLastError() {
+        self::$lastError = null;
+    }
+
+    private static function getMutatedIniValue($iniName, $existingValue, $iniDef) {
+        if ($existingValue === "1") {
+            return "0";
+        }
+
+        if ($existingValue === "0") {
+            return "1";
+        }
+
+        if (is_numeric($existingValue) && is_string($existingValue)) {
+            return $existingValue + 5;
+        }
+
+        if ($existingValue === '' && stripos($iniName, 'callback') !== false) {
+            return 'strlen';
+        }
+
+        return null;
+    }
+
+    private static function getLastErrorMessage() {
+        return self::$lastError;
     }
 }
