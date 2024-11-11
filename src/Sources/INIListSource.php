@@ -105,8 +105,16 @@ class INIListSource extends DataSourceBase implements DataSource {
         }
 
         return stripos($message, 'deprecate')
-            ? $message
+            ? self::trimDeprecationMessage($message)
             : false;
+    }
+
+    private static function trimDeprecationMessage($message) {
+        if (strpos($message, 'ini_set(): ') === 0) {
+            return substr($message, 11);
+        }
+
+        return $message;
     }
 
     public static function callErrorHandler($noop, $message) {
