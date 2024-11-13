@@ -59,7 +59,7 @@ $PHPWatchSymbols = array(
     'phpinfo' => phpwatch_get_phpinfo(),
 );
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../preload.php';
 
 $dumper = new Dumper(new Output());
 
