@@ -10,22 +10,35 @@ jobs:
     name: PHP ${{ matrix.php-version }} - Test
     strategy:
       matrix:
-        operating-system: ['ubuntu-latest']
-        php-version:
-          - '5.3'
-          - '5.4'
-          - '5.5'
-          - '5.6'
-          - '7.0'
-          - '7.1'
-          - '7.2'
-          - '7.3'
-          - '7.4'
-          - '8.0'
-          - '8.1'
-          - '8.2'
-          - '8.3'
-          - '8.4'
+        include:
+          - php-version: '5.3'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,ereg,exif,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,interbase,intl,json,ldap,libxml,mbstring,mcrypt,mssql,mysql,mysqli,mysqlnd,oci8,odbc,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,recode,reflection,session,shmop,simplexml,snmp,soap,sockets,spl,sqlite,sqlite3,standard,sybase_ct,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,wddx,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib'
+          - php-version: '5.4'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,ereg,exif,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,interbase,intl,json,ldap,libxml,mbstring,mcrypt,mssql,mysql,mysqli,mysqlnd,oci8,odbc,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,recode,reflection,session,shmop,simplexml,snmp,soap,sockets,spl,sqlite3,standard,sybase_ct,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,wddx,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # -sqlite
+          - php-version: '5.5'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,ereg,exif,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,interbase,intl,json,ldap,libxml,mbstring,mcrypt,mssql,mysql,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,recode,reflection,session,shmop,simplexml,snmp,soap,sockets,spl,sqlite3,standard,sybase_ct,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,wddx,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # +opcache
+          - php-version: '5.6'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,ereg,exif,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,interbase,intl,json,ldap,libxml,mbstring,mcrypt,mssql,mysql,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,recode,reflection,session,shmop,simplexml,snmp,soap,sockets,spl,sqlite3,standard,sybase_ct,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,wddx,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
+          - php-version: '7.0'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,interbase,intl,json,ldap,libxml,mbstring,mcrypt,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,recode,reflection,session,shmop,simplexml,snmp,soap,sockets,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,wddx,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # -ereg,mssql,mysql,sysbase_ct
+          - php-version: '7.1'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,interbase,intl,json,ldap,libxml,mbstring,mcrypt,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,recode,reflection,session,shmop,simplexml,snmp,soap,sockets,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,wddx,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
+          - php-version: '7.2'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,interbase,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,recode,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,wddx,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # -mcrypt +sodium
+          - php-version: '7.3'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,interbase,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,recode,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,wddx,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
+          - php-version: '7.4'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # +ffi -interbase,recode,wddx
+          - php-version: '8.0'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # -xmlrpc
+          - php-version: '8.1'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
+          - php-version: '8.2'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # +random
+          - php-version: '8.3'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,imap,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,oci8,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_oci,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,pspell,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
+          - php-version: '8.4'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # imap,pspell,oci8,pdo_oci
     steps:
       - uses: actions/checkout@v4
 
@@ -33,6 +46,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          extensions: ${{ matrix.extensions }}
 
       - name: Display versions and env
         run: |
