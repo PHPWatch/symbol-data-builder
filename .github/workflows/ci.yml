@@ -7,7 +7,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    name: PHP ${{ matrix.php-version }} - Test
+    name: PHP ${{ matrix.php-version }}
     strategy:
       matrix:
         include:
@@ -52,17 +52,18 @@ jobs:
         run: |
           php -v
           php -m
+          echo "Extensions requested: ${{ matrix.extensions }}"
 
-      - name: "Install Composer dependencies"
-        run:
-          composer dump-autoload
-
-      - name: Dump data
+      - name: Probe data
         run: |
           php bin/dump.php
 
       - name: List dirs
         run: find scratch | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+
+      - name: "Install Composer dependencies"
+        run:
+          composer dump-autoload
 
       - name: Run tests
         run: |

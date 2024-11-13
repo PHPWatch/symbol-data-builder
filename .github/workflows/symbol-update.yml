@@ -8,7 +8,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-24.04
-    name: PHP ${{ matrix.php-version }} - Dump
+    name: PHP ${{ matrix.php-version }}
     strategy:
       matrix:
         include:
@@ -66,10 +66,7 @@ jobs:
         run: |
           php -v
           php -m
-          
-      - name: "Install Composer dependencies"
-        run:
-          composer dump-autoload
+          echo "Extensions requested: ${{ matrix.extensions }}"
 
       - name: Dump data
         run: |
