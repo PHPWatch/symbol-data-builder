@@ -47,7 +47,6 @@ jobs:
 
       - name: Setup Curl
         uses: PHPWatch/setup-curl@main
-        if: matrix.php-version == '8.5' || matrix.php-version == '8.4'
 
       - name: Setup PHP
         uses: shivammathur/setup-php@verbose
