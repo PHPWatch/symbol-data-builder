@@ -45,6 +45,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Curl
+        uses: PHPWatch/setup-curl@main
+        if: matrix.php-version == '8.5' || matrix.php-version == '8.4'
+
       - name: Setup PHP
         uses: shivammathur/setup-php@verbose
         if: matrix.php-version != '8.5' && matrix.php-version != '8.4' # Instead of using setup-php, compile PHP from source instead.
@@ -59,8 +63,6 @@ jobs:
         if: matrix.php-version == '8.5' || matrix.php-version == '8.4'
         with:
           branch: ${{ matrix.php-version == '8.5' && 'master' || 'PHP-8.4' }}
-        env:
-          update: true
 
       - name: Display versions and env
         run: |
