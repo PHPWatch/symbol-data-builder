@@ -45,9 +45,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Curl
-        uses: PHPWatch/setup-curl@main
-
       - name: Setup PHP
         uses: shivammathur/setup-php@verbose
         if: matrix.php-version != '8.5' && matrix.php-version != '8.4' # Instead of using setup-php, compile PHP from source instead.
