@@ -59,6 +59,15 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
                 'ini' => $reflection->getINIEntries(),
             );
 
+            if (!empty($entries['constants'])) {
+                foreach ($entries['constants'] as $constName => &$constValue) {
+                    if (!empty(ConstantsSource::$dynamicConstants[$constName])) {
+                        $constValue = '__DYNAMIC__';
+                    }
+                }
+                unset($constValue);
+            }
+
             $functions = $reflection->getFunctions();
             foreach ($functions as $function) {
                 $entries['functions'][$function->getName()] = $function->getName();

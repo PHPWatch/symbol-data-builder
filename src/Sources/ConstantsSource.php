@@ -16,7 +16,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
 
     private static $lastError = null;
 
-    private static $dynamicConstants = array(
+    public static $dynamicConstants = array(
         'PHP_BUILD_DATE' => true,
     );
 
@@ -58,15 +58,15 @@ class ConstantsSource extends DataSourceBase implements DataSource {
     }
 
     private static function handleGroupedConstantList(array $groupedConstList, Output $output) {
-        $output->addData('const', $groupedConstList);
-
-        foreach ($groupedConstList as $groupName => $constList) {
+        foreach ($groupedConstList as $groupName => &$constList) {
             static::handleConstantList($groupName, $constList, $output);
         }
+        unset($constList);
+        $output->addData('const', $groupedConstList);
     }
 
-    private static function handleConstantList($groupName, array $constList, Output $output) {
-        foreach ($constList as $name => $value) {
+    private static function handleConstantList($groupName, array &$constList, Output $output) {
+        foreach ($constList as $name => &$value) {
 
             if (!empty(self::$dynamicConstants[$name])) {
                 $value = '__DYNAMIC__';
