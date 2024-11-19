@@ -16,6 +16,10 @@ class ConstantsSource extends DataSourceBase implements DataSource {
 
     private static $lastError = null;
 
+    private static $dynamicConstants = array(
+        'PHP_BUILD_DATE' => true,
+    );
+
     public function __construct(array $data) {
         $this->data = $data;
     }
@@ -63,6 +67,11 @@ class ConstantsSource extends DataSourceBase implements DataSource {
 
     private static function handleConstantList($groupName, array $constList, Output $output) {
         foreach ($constList as $name => $value) {
+
+            if (!empty(self::$dynamicConstants[$name])) {
+                $value = '__DYNAMIC__';
+            }
+
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
             $metafile = realpath(__DIR__ . '/../../meta/constants/' . $filename . '.php');
