@@ -17,9 +17,9 @@ class ConstantsSource extends DataSourceBase implements DataSource {
     private static $lastError = null;
 
     public static $dynamicConstants = array(
-        'PHP_BUILD_DATE' => true,
-        'PGSQL_LIBPQ_VERSION' => true,
-        'PGSQL_LIBPQ_VERSION_STR' => true,
+        'PHP_BUILD_DATE' => '__DYNAMIC__PHP Build Date',
+        'PGSQL_LIBPQ_VERSION' => '__DYNAMIC__PgSQL LibPQ Version',
+        'PGSQL_LIBPQ_VERSION_STR' => '__DYNAMIC__PgSQL LibPQ Version',
     );
 
     public function __construct(array $data) {
@@ -71,7 +71,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         foreach ($constList as $name => &$value) {
 
             if (!empty(self::$dynamicConstants[$name])) {
-                $value = '__DYNAMIC__';
+                $value = self::$dynamicConstants[$name];
             }
 
             // Handle namespaces
