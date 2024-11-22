@@ -114,12 +114,30 @@ jobs:
 
       - name: Generate commit message
         id: commit_msg
-        run: echo "commit_msg=$(date +"%Y %b %d")" >> "$GITHUB_OUTPUT"
+        run: |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "commit_msg<<$EOF" >> $GITHUB_OUTPUT
+          echo "$(date +"%Y %b %d") - $GITHUB_RUN_ID" >> $GITHUB_OUTPUT
+          printf "\n" >> $GITHUB_OUTPUT
+          echo "Action run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
 
       - name: Commit data
+        id: auto-commit-action
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: ${{ steps.commit_msg.outputs.commit_msg }}
           branch: main
           repository: data
           add_options: '-A'
+
+      - name: Update summary (if no symbols changed)
+        if: steps.auto-commit-action.outputs.changes_detected == 'false'
+        run:
+          echo "No changes to the symbols detected" > $GITHUB_STEP_SUMMARY
+
+      - name: Update summary (if symbols changed)
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run:
+          echo "[${{ steps.auto-commit-action.outputs.commit_hash }}](https://github.com/PHPWatch/PHP-Symbols/commit/${{ steps.auto-commit-action.outputs.commit_hash }})" > $GITHUB_STEP_SUMMARY
+
