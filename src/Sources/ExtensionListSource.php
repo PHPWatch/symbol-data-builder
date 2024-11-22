@@ -37,6 +37,10 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
             if ($metafile !== false && file_exists($metafile)) {
                 $meta = require $metafile;
             } else {
+                $extVersion = $reflection->getVersion();
+                if ($extVersion !== PHP_VERSION) {
+                    $extVersion = '__DYNAMIC__PHP Version';
+                }
                 // embed generic meta data
                 $meta = array(
                     'type' => 'extension',
@@ -46,7 +50,7 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
                     'added' => '0.0',
                     'deprecated' => $reflection,
                     'removed' => null,
-                    'version' => $reflection->getVersion(),
+                    'version' => $extVersion,
                     'resources' => static::generateResources($name),
                 );
             }
