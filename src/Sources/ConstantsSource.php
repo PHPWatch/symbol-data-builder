@@ -20,6 +20,9 @@ class ConstantsSource extends DataSourceBase implements DataSource {
         'PHP_BUILD_DATE' => '__DYNAMIC__PHP Build Date',
         'PGSQL_LIBPQ_VERSION' => '__DYNAMIC__PgSQL LibPQ Version',
         'PGSQL_LIBPQ_VERSION_STR' => '__DYNAMIC__PgSQL LibPQ Version',
+        'PHP_VERSION' => '__DYNAMIC__PHP Version',
+        'PHP_RELEASE_VERSION' => '__DYNAMIC__PHP Release ID',
+        'PHP_VERSION_ID' => '__DYNAMIC__PHP Version ID',
     );
 
     public function __construct(array $data) {
