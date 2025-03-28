@@ -10,11 +10,13 @@ abstract class DataSourceBase implements DataSourceInterface {
 
         foreach ($reflectionClass->getMethods() as $method) {
             $parameters = array();
+            $methodName = $method->getName();
 
             foreach ($method->getParameters() as $parameter) {
-                $parameters[$parameter->getName()] = array(
+                $paramName = $parameter->getName();
+                $parameters[$paramName] = array(
                     'position' => $parameter->getPosition(),
-                    'name' => $parameter->getName(),
+                    'name' => $paramName,
                     'type' => PHP_VERSION_ID >= 70000 ? (($parameter->getType() !== null) ? (string)$parameter->getType() : null) : null,
                     'is_optional' => $parameter->isOptional(),
                     'has_default_value' => $parameter->isDefaultValueAvailable(),
@@ -28,8 +30,8 @@ abstract class DataSourceBase implements DataSourceInterface {
                 );
             }
 
-            $methods[$method->getName()] = array(
-                'name' => $method->getName(),
+            $methods[$methodName] = array(
+                'name' => $methodName,
                 'class' => $method->getDeclaringClass()->getName(),
                 'parameters' => $parameters,
                 'return_type' => PHP_VERSION_ID >= 70000 ? (($method->getReturnType() !== null) ? (string)$method->getReturnType() : null) : null,
@@ -48,8 +50,9 @@ abstract class DataSourceBase implements DataSourceInterface {
         $properties = array();
 
         foreach ($reflectionClass->getProperties() as $property) {
-            $properties[$property->getName()] = array(
-                'name' => $property->getName(),
+            $propertyName = $property->getName();
+            $properties[$propertyName] = array(
+                'name' => $propertyName,
                 'class' => $property->getDeclaringClass()->getName(),
                 'type' => (method_exists($property, 'getType') && $property->getType() !== null)
                     ? (string)$property->getType()

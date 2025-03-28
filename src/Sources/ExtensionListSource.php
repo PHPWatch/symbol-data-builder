@@ -15,6 +15,10 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
      */
     private $data;
 
+    private static $coreExtensionsAllowList = array(
+        'dom', 'mysqlnd', 'zip',
+    );
+
     public function __construct(array $data) {
         $this->data = $data;
     }
@@ -26,7 +30,16 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
     private static function handleExtensionList(array $extList, Output $output) {
         $output->addData('ext', $extList, true);
 
+        $extListFile = __DIR__ . '/../../meta/core-exts/' . PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '/ext.php';
+
+        if (!file_exists($extListFile)) {
+            throw new \Exception('Extension list file does not exist');
+        }
+
+        $extList = require $extListFile;
+
         foreach ($extList as $name) {
+            $external = false;
             $reflection = new ReflectionExtension($name);
 
             // Handle namespaces
@@ -38,9 +51,13 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
                 $meta = require $metafile;
             } else {
                 $extVersion = $reflection->getVersion();
-                if ($extVersion !== PHP_VERSION) {
+
+                if ($extVersion === PHP_VERSION || $extVersion !== PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '.' . PHP_RELEASE_VERSION) {
                     $extVersion = '__DYNAMIC__PHP Version';
                 }
+
+                $external = !in_array($name, $extList, true);
+
                 // embed generic meta data
                 $meta = array(
                     'type' => 'extension',
@@ -74,12 +91,21 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
 
             $functions = $reflection->getFunctions();
             foreach ($functions as $function) {
-                $entries['functions'][$function->getName()] = $function->getName();
+                $functionName = $function->getName();
+                $entries['functions'][$functionName] = $functionName;
             }
 
-            $output->addData('extensions/' . $filename, array(
+            $stub = array(
                 'type' => 'extension',
                 'name' => $reflection->getName(),
+            );
+
+            if ($external) {
+                var_dump($name);
+                $stub['external'] = true;
+            }
+
+            $output->addData('extensions/' . $filename, $stub + array(
                 'meta' => $meta,
             ) + $entries);
         }
