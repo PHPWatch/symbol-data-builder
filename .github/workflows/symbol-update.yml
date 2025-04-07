@@ -54,6 +54,14 @@ jobs:
         env:
           update: true
 
+      - name: List and remove PECL extensions
+        run: |
+          php --ini
+          php -m
+          sudo rm -f /etc/php/*/cli/conf.d/*{amqp,apcu,redis,igbinary,imagick,memcache,memcached,msgpack,yaml,xdebug,mongodb,pcov,zmq}.ini
+          php --ini
+          php -m
+
       - name: Compile and Setup PHP (${{ matrix.php-version }})
         uses: PHPWatch/compile-php@main
         if: matrix.php-version == '8.5' || matrix.php-version == '8.4'

@@ -5,6 +5,7 @@ namespace PHPWatch\SymbolData\Sources;
 use PHPWatch\SymbolData\DataSource;
 use PHPWatch\SymbolData\DataSourceBase;
 use PHPWatch\SymbolData\Output;
+use ReflectionException;
 use ReflectionExtension;
 
 class ExtensionListSource extends DataSourceBase implements DataSource {
@@ -40,7 +41,12 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
 
         foreach ($extList as $name) {
             $external = false;
-            $reflection = new ReflectionExtension($name);
+            try {
+                $reflection = new ReflectionExtension($name);
+            }
+            catch (ReflectionException $e) {
+                continue;
+            }
 
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
@@ -101,7 +107,6 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
             );
 
             if ($external) {
-                var_dump($name);
                 $stub['external'] = true;
             }
 
