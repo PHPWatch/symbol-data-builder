@@ -58,7 +58,6 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 'comment' => $reflection->getDocComment(),
                 'defaultProperties' => $reflection->getDefaultProperties(),
                 'namespace' => $reflection->getNamespaceName(),
-                'parent' => $reflection->getParentClass(),
                 'staticProperties' => $reflection->getStaticProperties(),
                 'interfaces' => $reflection->getInterfaceNames(),
                 //'constants' => $reflection->getConstants(), // Do not collect, because constants can refer to other consts.
