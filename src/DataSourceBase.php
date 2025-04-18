@@ -20,7 +20,7 @@ abstract class DataSourceBase implements DataSourceInterface {
                     'type' => PHP_VERSION_ID >= 70000 ? (($parameter->getType() !== null) ? (string)$parameter->getType() : null) : null,
                     'is_optional' => $parameter->isOptional(),
                     'has_default_value' => $parameter->isDefaultValueAvailable(),
-                    'default_value' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
+                    //'default_value' => $parameter->isDefaultValueAvailable() ? $parameter->getDefaultValue() : null,
                     'has_default_value_constant' => $parameter->isDefaultValueAvailable()
                         && (PHP_VERSION_ID >= 50400 ? $parameter->isDefaultValueConstant() : null),
                     'default_value_constant' =>
