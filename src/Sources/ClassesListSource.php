@@ -60,7 +60,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 'namespace' => $reflection->getNamespaceName(),
                 'staticProperties' => $reflection->getStaticProperties(),
                 'interfaces' => $reflection->getInterfaceNames(),
-                //'constants' => $reflection->getConstants(), // Do not collect, because constants can refer to other consts.
+                'constants' => self::reflectClassConstants($reflection->getConstants(), $name),
                 'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
                 'traits' => PHP_VERSION_ID >= 50400 ? $reflection->getTraitNames() : null,
@@ -73,6 +73,41 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 'toString' => $reflection->__toString(),
             ));
         }
+    }
+
+    private static function reflectClassConstants(array $constants, $className) {
+        $return = array();
+        foreach ($constants as $name => $value) {
+            $constVals = array(
+                'value' => $value,
+            );
+
+            if (PHP_VERSION_ID >= 70100) {
+                $reflector = new \ReflectionClassConstant($className, $name);
+                $constVals['toString'] = $reflector->__toString();
+                $constVals['visibility'] = $reflector->getModifiers();
+
+                if (PHP_VERSION_ID >= 80100) {
+                    $constVals['isFinal'] = $reflector->isFinal();
+
+                    if ($reflector->isEnumCase()) {
+                        $constVals['value'] = null;
+                        $constVals['isEnumCase'] = true;
+                    }
+                }
+
+                if (PHP_VERSION_ID >= 80300 && $reflector->hasType()) {
+                    $constVals['type'] = $reflector->getType()->getName();
+                }
+
+                if (PHP_VERSION_ID >= 80400 && $reflector->isDeprecated()) {
+                    $constVals['isDeprecated'] = true;
+                }
+            }
+            $return[$name] = $constVals;
+        }
+
+        return $return;
     }
 
     private static function generateResources($classname) {
