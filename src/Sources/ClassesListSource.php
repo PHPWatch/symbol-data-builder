@@ -68,6 +68,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 'is_anonymous' => PHP_VERSION_ID >= 70000 ? ($reflection->isAnonymous()) : null,
                 'is_cloneable' => PHP_VERSION_ID >= 50400 ? $reflection->isCloneable() : null,
                 'is_final' => $reflection->isFinal(),
+                'is_instantiable' => $reflection->isInstantiable(),
                 'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
                 'extension' => $reflection->getExtensionName(),
                 'toString' => $reflection->__toString(),
