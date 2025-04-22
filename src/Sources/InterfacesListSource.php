@@ -10,28 +10,31 @@ use ReflectionClass;
 class InterfacesListSource extends DataSourceBase implements DataSource {
     const NAME = 'interface';
 
+    const NAME_PLURAL = 'interfaces';
+
     /**
      * @var array
      */
-    private $data;
+    protected $data;
 
     public function __construct(array $data) {
         $this->data = $data;
     }
 
     public function addDataToOutput(Output $output) {
-        static::handleInterfaceList($this->data, $output);
+        static::handleClassLikeList($this->data, $output);
     }
 
-    private static function handleInterfaceList(array $interfaceList, Output $output) {
-        $output->addData('interface', $interfaceList, true);
 
-        foreach ($interfaceList as $name) {
+    private static function handleClassLikeList(array $classLikeList, Output $output) {
+        $output->addData(static::NAME, $classLikeList, true);
+
+        foreach ($classLikeList as $name) {
             $reflection = new ReflectionClass($name);
 
             // Handle namespaces
             $filename = str_replace('\\', '/', $name);
-            $metafile = realpath(__DIR__ . '/../../meta/interfaces/' . $filename . '.php');
+            $metafile = realpath(__DIR__ . '/../../meta/' . static::NAME_PLURAL . '/' . $filename . '.php');
 
             // maybe embed custom meta data
             if ($metafile !== false && file_exists($metafile)) {
@@ -39,7 +42,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
             } else {
                 // embed generic meta data
                 $meta = array(
-                    'type' => 'interface',
+                    'type' => static::NAME,
                     'name' => $reflection->getName(),
                     'description' => '',
                     'keywords' => array(),
@@ -50,33 +53,41 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
                 );
             }
 
-            $additional = array();
 
-            if (PHP_VERSION_ID >= 80000) {
-                $attrs  = $reflection->getAttributes();
-                if ($attrs) {
-                    $additional['attributes'] = array();
-                    foreach ($attrs as $attr) {
-                        $additional['attributes'][] = $attr->getName();
-                    }
-                }
-            }
 
-            $output->addData('interfaces/' . $filename, array(
-                'type' => 'interface',
+            $output->addData(static::NAME_PLURAL . '/' . $filename, array(
+                'type' => static::NAME,
                 'name' => $reflection->getName(),
                 'meta' => $meta,
-                'interfaces' => $reflection->getInterfaceNames(),
+                'comment' => $reflection->getDocComment(),
+                'namespace' => $reflection->getNamespaceName(),
                 'constants' => self::reflectClassConstants($reflection->getConstants(), $name),
-                'properties' => static::generateDetailsAboutProperties($reflection),
                 'methods' => static::generateDetailsAboutMethods($reflection),
+                'interfaces' => $reflection->getInterfaceNames(),
+                'properties' => static::generateDetailsAboutProperties($reflection),
                 'extension' => $reflection->getExtensionName(),
                 'toString' => $reflection->__toString(),
-            ) + $additional);
+            ) + static::getAdditionalData($reflection));
         }
     }
 
-    private static function reflectClassConstants(array $constants, $className) {
+    protected static function getAdditionalData(ReflectionClass $reflection) {
+        $additional = array();
+
+        if (PHP_VERSION_ID >= 80000) {
+            $attrs  = $reflection->getAttributes();
+            if ($attrs) {
+                $additional['attributes'] = array();
+                foreach ($attrs as $attr) {
+                    $additional['attributes'][] = $attr->getName();
+                }
+            }
+        }
+
+        return $additional;
+    }
+
+    protected static function reflectClassConstants(array $constants, $className) {
         $return = array();
         foreach ($constants as $name => $value) {
             $constVals = array(
@@ -111,10 +122,10 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
         return $return;
     }
 
-    private static function generateResources($name) {
+    protected static function generateResources($name) {
         return array(
             array(
-                'name' => $name . ' interface (php.net)',
+                'name' => $name . ' '. self::NAME .' (php.net)',
                 'url' => 'https://www.php.net/manual/class.' . str_replace('\\', '-', strtolower($name)) . '.php',
             ),
         );
