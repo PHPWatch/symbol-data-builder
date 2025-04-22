@@ -50,6 +50,18 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
                 );
             }
 
+            $additional = array();
+
+            if (PHP_VERSION_ID >= 80000) {
+                $attrs  = $reflection->getAttributes();
+                if ($attrs) {
+                    $additional['attributes'] = $attrs;
+                    foreach ($attrs as $attr) {
+                        $additional['attributes'] = $attr->getName();
+                    }
+                }
+            }
+
             $output->addData('interfaces/' . $filename, array(
                 'type' => 'interface',
                 'name' => $reflection->getName(),
@@ -60,7 +72,7 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
                 'methods' => static::generateDetailsAboutMethods($reflection),
                 'extension' => $reflection->getExtensionName(),
                 'toString' => $reflection->__toString(),
-            ));
+            ) + $additional);
         }
     }
 

@@ -50,6 +50,18 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 );
             }
 
+            $additional = array();
+
+            if (PHP_VERSION_ID >= 80000) {
+                $attrs  = $reflection->getAttributes();
+                if ($attrs) {
+                    $additional['attributes'] = $attrs;
+                    foreach ($attrs as $attr) {
+                        $additional['attributes'] = $attr->getName();
+                    }
+                }
+            }
+
             $output->addData('classes/' . $filename, array(
                 'type' => 'class',
                 'name' => $reflection->getName(),
@@ -72,7 +84,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 'is_read_only' => (method_exists($reflection, 'isReadOnly')) ? $reflection->isReadOnly() : false,
                 'extension' => $reflection->getExtensionName(),
                 'toString' => $reflection->__toString(),
-            ));
+            ) + $additional);
         }
     }
 
