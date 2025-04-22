@@ -57,7 +57,7 @@ class ClassesListSource extends DataSourceBase implements DataSource {
                 if ($attrs) {
                     $additional['attributes'] = $attrs;
                     foreach ($attrs as $attr) {
-                        $additional['attributes'] = $attr->getName();
+                        $additional['attributes'][] = $attr->getName();
                     }
                 }
             }

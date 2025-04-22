@@ -55,9 +55,9 @@ class InterfacesListSource extends DataSourceBase implements DataSource {
             if (PHP_VERSION_ID >= 80000) {
                 $attrs  = $reflection->getAttributes();
                 if ($attrs) {
-                    $additional['attributes'] = $attrs;
+                    $additional['attributes'] = [];
                     foreach ($attrs as $attr) {
-                        $additional['attributes'] = $attr->getName();
+                        $additional['attributes'][] = $attr->getName();
                     }
                 }
             }
