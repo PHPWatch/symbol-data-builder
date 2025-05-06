@@ -40,16 +40,6 @@ jobs:
           - php-version: '8.4'
             extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # imap,pspell,oci8,pdo_oci
     steps:
-      - name: "Test: Generate commit message"
-        id: commit_msg
-        run: |
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "commit_msg<<$EOF" >> $GITHUB_OUTPUT
-          echo "$(date +"%Y %b %d") - $GITHUB_RUN_ID" >> $GITHUB_OUTPUT
-          printf "\n" >> $GITHUB_OUTPUT
-          echo "Action run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
-
       - uses: actions/checkout@v4
 
       - name: Setup PHP
@@ -78,3 +68,9 @@ jobs:
       - name: Run tests
         run: |
           php tests/test.php
+          
+      - name: Upload data
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.php-version }}
+          path: scratch
