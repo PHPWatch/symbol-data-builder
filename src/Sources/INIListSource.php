@@ -74,6 +74,10 @@ class INIListSource extends DataSourceBase implements DataSource {
         $devContents = file_get_contents('https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-development');
         $prodContents = file_get_contents('https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-production');
 
+        if (!$devContents || !$prodContents) {
+            throw new \RuntimeException(sprintf('Unable to fetch INI values: %s, %s', 'https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-development', 'https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-production'));
+        }
+
         $return['development'] = $devContents;
         $return['production'] = $prodContents;
 
