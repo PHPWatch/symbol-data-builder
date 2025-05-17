@@ -71,8 +71,8 @@ class INIListSource extends DataSourceBase implements DataSource {
             $branch = 'PHP-' . $version;
         }
 
-        $devContents = file_get_contents('https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-development');
-        $prodContents = file_get_contents('https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-production');
+        $devContents = self::getContentsFromGitHub($branch, 'php.ini-development');
+        $prodContents = self::getContentsFromGitHub($branch, 'php.ini-production');
 
         if (!$devContents || !$prodContents) {
             throw new \RuntimeException(sprintf('Unable to fetch INI values: %s, %s', 'https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-development', 'https://raw.githubusercontent.com/php/php-src/'. $branch .'/php.ini-production'));
@@ -82,6 +82,39 @@ class INIListSource extends DataSourceBase implements DataSource {
         $return['production'] = $prodContents;
 
         return $return;
+    }
+
+    private static function getContentsFromGitHub($branch, $file) {
+        $token = getenv('GITHUB_PAT');
+
+        if (!$token) {
+            $contents = file_get_contents("https://raw.githubusercontent.com/php/php-src/'. $branch .'/$file");
+            if (!$contents) {
+                throw new \RuntimeException(sprintf('Unable to fetch contents from GitHub: %s on branch %s', $file, $branch));
+            }
+
+            return $contents;
+        }
+
+        $url = "https://api.github.com/repos/php/php-src/contents/$file?ref=$branch";
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Authorization: token $token",
+            "Accept: application/vnd.github.v3.raw",
+            "User-Agent: PHP-cURL" // GitHub API requires a User-Agent header
+        ));
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode === 200) {
+            return $response;
+        }
+
+        throw new \RuntimeException(sprintf('Unable to fetch contents from GitHub API: %s from %s branch: Error: %s', $file, $branch, $httpCode));
     }
 
     private static function checkIfIniDeprecated($iniName, array $iniDef) {
