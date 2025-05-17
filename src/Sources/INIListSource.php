@@ -88,7 +88,7 @@ class INIListSource extends DataSourceBase implements DataSource {
         $token = getenv('GITHUB_PAT');
 
         if (!$token) {
-            $contents = file_get_contents("https://raw.githubusercontent.com/php/php-src/'. $branch .'/$file");
+            $contents = file_get_contents("https://raw.githubusercontent.com/php/php-src/$branch/$file");
             if (!$contents) {
                 throw new \RuntimeException(sprintf('Unable to fetch contents from GitHub: %s on branch %s', $file, $branch));
             }

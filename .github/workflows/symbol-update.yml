@@ -75,6 +75,8 @@ jobs:
           echo "Extensions requested: ${{ matrix.extensions }}"
 
       - name: Dump data
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           php bin/dump.php
 

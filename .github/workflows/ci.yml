@@ -66,6 +66,8 @@ jobs:
           composer dump-autoload
 
       - name: Run tests
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           php tests/test.php
           
