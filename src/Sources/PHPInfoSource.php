@@ -41,7 +41,7 @@ class PHPInfoSource extends DataSourceBase implements DataSource {
             $output = str_replace($matches['libs'], $lines, $output);
         }
 
-        $regex = '/(h|hun|a)spell => .*enchant_((h|hun|a)spell)\.so/s';
+        $regex = '/(h|hun|a|my|i)spell => .*enchant_((h|hun|a|my|i)spell)\.so/is';
         if (preg_match($regex, $output, $matches)) {
             $originalText = $matches[0];
             $lines = preg_split('/([\r\n])+/', $originalText);
