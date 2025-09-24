@@ -42,12 +42,14 @@ jobs:
             extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # imap,pspell,oci8,pdo_oci
           - php-version: '8.5'
             extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
+          - php-version: '8.6'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
     steps:
       - uses: actions/checkout@v5
 
       - name: Setup PHP
         uses: shivammathur/setup-php@verbose
-        if: matrix.php-version != '8.5' && matrix.php-version != '8.4' # Instead of using setup-php, compile PHP from source instead.
+        if: matrix.php-version != '8.5' && matrix.php-version != '8.6' # Instead of using setup-php, compile PHP from source instead.
         with:
           php-version: ${{ matrix.php-version }}
           extensions: ${{ matrix.extensions }}
@@ -64,9 +66,15 @@ jobs:
 
       - name: Compile and Setup PHP (${{ matrix.php-version }})
         uses: PHPWatch/compile-php@main
-        if: matrix.php-version == '8.5' || matrix.php-version == '8.4'
+        if: matrix.php-version == '8.5'
         with:
-          branch: ${{ matrix.php-version == '8.5' && 'master' || 'PHP-8.4' }}
+          branch: 'PHP-${{ matrix.php-version }}'
+
+      - name: Compile and Setup PHP (master)
+        uses: PHPWatch/compile-php@main
+        if: matrix.php-version == '8.6'
+        with:
+          branch: 'master'
 
       - name: Display versions and env
         run: |
