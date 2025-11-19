@@ -18,6 +18,7 @@ class ConstantsSource extends DataSourceBase implements DataSource {
 
     public static $dynamicConstants = array(
         'PHP_BUILD_DATE' => '__DYNAMIC__PHP Build Date',
+        'PHP_BUILD_PROVIDER' => '__DYNAMIC__PHP Build Provider',
         'PGSQL_LIBPQ_VERSION' => '__DYNAMIC__PgSQL LibPQ Version',
         'PGSQL_LIBPQ_VERSION_STR' => '__DYNAMIC__PgSQL LibPQ Version',
         'PHP_VERSION' => '__DYNAMIC__PHP Version',
