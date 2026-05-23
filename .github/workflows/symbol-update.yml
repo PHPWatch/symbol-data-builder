@@ -84,7 +84,7 @@ jobs:
 
       - name: Dump data
         env:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_PAT: ${{ secrets.DATA_REPO_PAT }}
         run: |
           php bin/dump.php
 
