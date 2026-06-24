@@ -57,8 +57,8 @@ abstract class DataSourceBase implements DataSourceInterface {
                 'type' => (method_exists($property, 'getType') && $property->getType() !== null)
                     ? (string)$property->getType()
                     : null,
-                'has_default_value' => method_exists($property, 'hasDefaultValue') && $property->hasDefaultValue(),
-                'default_value' => (method_exists($property, 'hasDefaultValue')) ? $property->getDefaultValue() : null,
+                'has_default_value' => (\PHP_VERSION_ID >= 80000) && ($property->hasDefaultValue()),
+                'default_value' => ((\PHP_VERSION_ID >= 80000) && $property->hasDefaultValue()) ? $property->getDefaultValue() : null,
                 'is_static' => $property->isStatic(),
                 'is_public' => $property->isPublic(),
                 'is_protected' => $property->isProtected(),
