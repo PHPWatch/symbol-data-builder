@@ -110,7 +110,10 @@ class INIListSource extends DataSourceBase implements DataSource {
         $response = curl_exec($ch);
 
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        
+        if (PHP_VERSION_ID < 80000) {
+            curl_close($ch);
+        }
 
         if ($httpCode === 200) {
             return $response;
