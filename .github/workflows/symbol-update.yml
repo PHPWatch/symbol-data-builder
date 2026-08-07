@@ -45,18 +45,20 @@ jobs:
           - php-version: '8.6'
             extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
     steps:
-      - uses: actions/checkout@v7
-        with:
-          persist-credentials: false
+      - parallel:
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@verbose
-        if: matrix.php-version != '8.5' && matrix.php-version != '8.6' # Instead of using setup-php, compile PHP from source instead.
-        with:
-          php-version: ${{ matrix.php-version }}
-          extensions: ${{ matrix.extensions }}
-        env:
-          update: true
+        - uses: actions/checkout@v7
+          with:
+            persist-credentials: false
+
+        - name: Setup PHP
+          uses: shivammathur/setup-php@verbose
+          if: matrix.php-version != '8.5' && matrix.php-version != '8.6' # Instead of using setup-php, compile PHP from source instead.
+          with:
+            php-version: ${{ matrix.php-version }}
+            extensions: ${{ matrix.extensions }}
+          env:
+            update: true
 
       - name: List and remove PECL extensions
         run: |
@@ -104,23 +106,24 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v7
-        name: Checkout main repo
-        with:
-          persist-credentials: false
+      - parallel:
+        - uses: actions/checkout@v7
+          name: Checkout main repo
+          with:
+            persist-credentials: false
 
-      - uses: actions/checkout@v7
-        name: Checkout data repo
-        with:
-          persist-credentials: true
-          repository: PHPWatch/PHP-Symbols
-          path: data
-          token: ${{ secrets.DATA_REPO_PAT }}
+        - uses: actions/checkout@v7
+          name: Checkout data repo
+          with:
+            persist-credentials: true
+            repository: PHPWatch/PHP-Symbols
+            path: data
+            token: ${{ secrets.DATA_REPO_PAT }}
 
-      - name: Collect data
-        uses: actions/download-artifact@v8
-        with:
-          path: scratch
+        - name: Collect data
+          uses: actions/download-artifact@v8
+          with:
+            path: scratch
 
       - name: Prime files
         run: |
