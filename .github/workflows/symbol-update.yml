@@ -113,6 +113,7 @@ jobs:
       - uses: actions/checkout@v7
         name: Checkout data repo
         with:
+          persist-credentials: false
           repository: PHPWatch/PHP-Symbols
           path: data
           token: ${{ secrets.DATA_REPO_PAT }}

@@ -80,3 +80,52 @@ jobs:
         with:
           name: ${{ matrix.php-version }}
           path: scratch
+
+  collect:
+    needs: run
+    runs-on: ubuntu-latest
+    name: Collect and Commit Data
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7
+        name: Checkout main repo
+        with:
+          persist-credentials: false
+
+      - uses: actions/checkout@v7
+        name: Checkout data repo
+        with:
+          persist-credentials: false
+          repository: PHPWatch/PHP-Symbols
+          path: data
+          token: ${{ secrets.DATA_REPO_PAT }}
+
+      - name: Collect data
+        uses: actions/download-artifact@v8
+        with:
+          path: scratch
+
+      - name: Prime files
+        run: |
+          cp -Rf data/.git data-repo-meta
+          cp data/README.md data-README.md
+          rm data -Rf
+          mkdir data
+          mv data-repo-meta data/.git 
+          mv data-README.md data/README.md 
+          cp scratch/* data/ -Rf
+
+      - name: List dirs
+        run: find data | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+
+      - name: Generate commit message
+        id: commit_msg
+        run: |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "commit_msg<<$EOF" >> $GITHUB_OUTPUT
+          echo "$(date +"%Y %b %d") - $GITHUB_RUN_ID" >> $GITHUB_OUTPUT
+          printf "\n" >> $GITHUB_OUTPUT
+          echo "Action run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
