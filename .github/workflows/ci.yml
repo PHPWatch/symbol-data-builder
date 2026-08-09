@@ -1,5 +1,6 @@
 name: Tests
-permissions: read-all
+permissions:
+  contents: read
 on:
   pull_request:
   push:
@@ -84,9 +85,7 @@ jobs:
   collect:
     needs: run
     runs-on: ubuntu-latest
-    name: Collect and Commit Data
-    permissions:
-      contents: write
+    name: Collect and Commit Data (simulated)
 
     steps:
       - uses: actions/checkout@v7

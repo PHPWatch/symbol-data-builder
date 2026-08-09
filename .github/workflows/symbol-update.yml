@@ -1,5 +1,6 @@
 name: Symbol updater
-permissions: read-all
+permissions:
+  contents: read
 on:
   workflow_dispatch:
   schedule:
@@ -101,8 +102,6 @@ jobs:
     needs: run
     runs-on: ubuntu-latest
     name: Collect and Commit Data
-    permissions:
-      contents: write
 
     steps:
       - uses: actions/checkout@v7
@@ -113,7 +112,7 @@ jobs:
       - uses: actions/checkout@v7
         name: Checkout data repo
         with:
-          persist-credentials: false
+          persist-credentials: true
           repository: PHPWatch/PHP-Symbols
           path: data
           token: ${{ secrets.DATA_REPO_PAT }}
