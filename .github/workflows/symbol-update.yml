@@ -45,6 +45,10 @@ jobs:
             extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
           - php-version: '8.6'
             extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
+            branch: master
+          - php-version: '8.7'
+            extensions: 'none, bcmath,bz2,calendar,com_dotnet,ctype,curl,date,dba,dom,enchant,exif,ffi,fileinfo,filter,ftp,gd,gettext,gmp,hash,iconv,intl,json,ldap,libxml,mbstring,mysqli,mysqlnd,odbc,opcache,openssl,pcntl,pcre,pdo,pdo_dblib,pdo_firebird,pdo_mysql,pdo_odbc,pdo_pgsql,pdo_sqlite,pgsql,phar,posix,random,readline,reflection,session,shmop,simplexml,snmp,soap,sockets,sodium,spl,sqlite3,standard,sysvmsg,sysvsem,sysvshm,tidy,tokenizer,xml,xmlreader,xmlrpc,xmlwriter,xsl,zip,zlib' # =
+            branch: master
     steps:
       - uses: actions/checkout@v7
         with:
@@ -52,7 +56,7 @@ jobs:
 
       - name: Setup PHP
         uses: shivammathur/setup-php@verbose
-        if: matrix.php-version != '8.5' && matrix.php-version != '8.6' # Instead of using setup-php, compile PHP from source instead.
+        if: ${{ !matrix.branch }}
         env:
           update: true
         with:
@@ -68,17 +72,11 @@ jobs:
           php --ini
           php -m
 
-      - name: Compile and Setup PHP (${{ matrix.php-version }})
+      - name: Compile + Setup PHP ${{ matrix.php-version }} from ${{ matrix.branch }}
         uses: PHPWatch/compile-php@main
-        if: matrix.php-version == '8.5'
+        if: ${{ matrix.branch }}
         with:
-          branch: 'PHP-${{ matrix.php-version }}'
-
-      - name: Compile and Setup PHP (master)
-        uses: PHPWatch/compile-php@main
-        if: matrix.php-version == '8.6'
-        with:
-          branch: 'master'
+          branch: '${{ matrix.branch }}'
 
       - name: Display versions and env
         run: |
