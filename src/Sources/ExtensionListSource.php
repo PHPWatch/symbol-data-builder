@@ -34,7 +34,7 @@ class ExtensionListSource extends DataSourceBase implements DataSource {
         $extListFile = __DIR__ . '/../../meta/core-exts/' . PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '/ext.php';
 
         if (!file_exists($extListFile)) {
-            throw new \Exception('Extension list file does not exist');
+            throw new \Exception('Extension list file does not exist: "' . $extListFile . '"');
         }
 
         $extList = require $extListFile;
